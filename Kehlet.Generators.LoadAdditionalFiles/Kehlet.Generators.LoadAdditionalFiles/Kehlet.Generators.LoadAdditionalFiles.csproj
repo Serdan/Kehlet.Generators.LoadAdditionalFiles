@@ -15,6 +15,9 @@
         <Title>AutoLoadAdditionalFiles</Title>
         <Description>Loads additional files in the project into const string fields of marked class.</Description>
         <Copyright>Anders Kehlet</Copyright>
+        <PackageProjectUrl>https://github.com/Serdan/Kehlet.Generators.LoadAdditionalFiles</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Serdan/Kehlet.Generators.LoadAdditionalFiles</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
