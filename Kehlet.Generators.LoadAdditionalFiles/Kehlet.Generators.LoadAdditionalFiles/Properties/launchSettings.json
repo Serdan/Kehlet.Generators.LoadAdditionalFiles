@@ -1,0 +1,9 @@
+﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "DebugRoslynSourceGenerator": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "../Kehlet.Generators.LoadAdditionalFiles.Sample/Kehlet.Generators.LoadAdditionalFiles.Sample.csproj"
+    }
+  }
+}

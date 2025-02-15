@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kehlet.Generators.LoadAdditionalFiles", "Kehlet.Generators.LoadAdditionalFiles\Kehlet.Generators.LoadAdditionalFiles\Kehlet.Generators.LoadAdditionalFiles.csproj", "{A10A02E6-5266-4262-A035-5E374EE76CAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kehlet.Generators.LoadAdditionalFiles.Sample", "Kehlet.Generators.LoadAdditionalFiles\Kehlet.Generators.LoadAdditionalFiles.Sample\Kehlet.Generators.LoadAdditionalFiles.Sample.csproj", "{35CADCC7-272D-400B-8C44-9FEC65F466EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A10A02E6-5266-4262-A035-5E374EE76CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A10A02E6-5266-4262-A035-5E374EE76CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A10A02E6-5266-4262-A035-5E374EE76CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A10A02E6-5266-4262-A035-5E374EE76CAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35CADCC7-272D-400B-8C44-9FEC65F466EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35CADCC7-272D-400B-8C44-9FEC65F466EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35CADCC7-272D-400B-8C44-9FEC65F466EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35CADCC7-272D-400B-8C44-9FEC65F466EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
