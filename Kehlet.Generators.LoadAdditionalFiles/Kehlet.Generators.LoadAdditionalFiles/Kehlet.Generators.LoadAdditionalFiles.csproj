@@ -4,20 +4,25 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <IsPackable>true</IsPackable>
         <Nullable>enable</Nullable>
-        <LangVersion>default</LangVersion>
-
+        <LangVersion>latest</LangVersion>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <ImplicitUsings>true</ImplicitUsings>
+        <NoWarn>$(NoWarn);NU5128</NoWarn>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <IsRoslynComponent>true</IsRoslynComponent>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
         <RootNamespace>Kehlet.Generators.LoadAdditionalFiles</RootNamespace>
         <PackageId>Kehlet.Generators.LoadAdditionalFiles</PackageId>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>AutoLoadAdditionalFiles</Title>
         <Description>Loads additional files in the project into const string fields of marked class.</Description>
         <Copyright>Anders Kehlet</Copyright>
         <PackageProjectUrl>https://github.com/Serdan/Kehlet.Generators.LoadAdditionalFiles</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Serdan/Kehlet.Generators.LoadAdditionalFiles</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <Authors>Anders Kehlet</Authors>
     </PropertyGroup>
 
     <ItemGroup>
@@ -25,8 +30,12 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.12.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" PrivateAssets="all"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="$(MSBuildThisFileDirectory)..\..\readme.md" Pack="true" PackagePath="" />
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    </ItemGroup>
 
 </Project>

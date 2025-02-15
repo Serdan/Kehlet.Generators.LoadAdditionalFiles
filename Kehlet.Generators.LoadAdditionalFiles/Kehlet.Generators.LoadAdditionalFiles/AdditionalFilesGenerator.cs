@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Immutable;
-using System.IO;
 using System.Text;
-using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -40,7 +37,7 @@ public class AdditionalFilesGenerator : IIncrementalGenerator
         var texts = context.AdditionalTextsProvider.Collect();
         var provider = context.SyntaxProvider
                               .ForAttributeWithMetadataName(AttributeFqn, IsValidTarget, Transform)
-                              .SelectMany((x, _) => x is null ? ImmutableArray<Target>.Empty : [x.Value])
+                              .SelectMany((x, _) => x is null ? ImmutableArray<Target>.Empty : ImmutableArray.Create(x.Value))
                               .Combine(texts);
 
         context.RegisterSourceOutput(provider, (ctx, tuple) => GenerateCode(ctx, tuple.Left, tuple.Right));
