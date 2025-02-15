@@ -15,8 +15,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="Source.cs"/>
-        <AdditionalFiles Include="Source.cs"/>
+        <Compile Remove="TestFile.cs"/>
+        <AdditionalFiles Include="TestFile.cs"/>
+        <AdditionalFiles Include="grocerylist.txt"/>
     </ItemGroup>
 
 </Project>
