@@ -11,7 +11,8 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <IsRoslynComponent>true</IsRoslynComponent>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+        <DevelopmentDependency>true</DevelopmentDependency>
 
         <RootNamespace>Kehlet.Generators.LoadAdditionalFiles</RootNamespace>
         <PackageId>Kehlet.Generators.LoadAdditionalFiles</PackageId>
@@ -23,6 +24,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
         <Authors>Anders Kehlet</Authors>
+        <Version>1.0.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
