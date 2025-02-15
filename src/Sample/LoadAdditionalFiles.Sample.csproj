@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    
+    <AssemblyName>$(PackageName).Sample</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\Roslyn\Generator\AdditionalFilesGenerator.cs" Visible="false"/>
+    <AdditionalFiles Include="..\Roslyn\Generator\AdditionalFilesGenerator.Emitter.cs" Visible="false"/>
+    <AdditionalFiles Include="..\Roslyn\Generator\AdditionalFilesGenerator.Parser.cs" Visible="false"/>
+    <AdditionalFiles Include="..\Roslyn\Generator\Data\Models.cs" Visible="false"/>
+    <AdditionalFiles Include="..\Roslyn\Generator\Data\*.cs" Visible="false"/>
+    <AdditionalFiles Include="Files\grocerylist.txt"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Roslyn\Generator\LoadAdditionalFiles.Generator.csproj" OutputItemType="Analyzer"/>
+    <ProjectReference Include="..\Roslyn\Analyzer\LoadAdditionalFiles.Analyzer.csproj" OutputItemType="Analyzer"/>
+    <ProjectReference Include="..\Roslyn\CodeFixes\LoadAdditionalFiles.CodeFixes.csproj" OutputItemType="Analyzer"/>
+    <ProjectReference Include="..\Roslyn\Common\LoadAdditionalFiles.Common.csproj" OutputItemType="Analyzer"/>
+  </ItemGroup>
+
+</Project>
