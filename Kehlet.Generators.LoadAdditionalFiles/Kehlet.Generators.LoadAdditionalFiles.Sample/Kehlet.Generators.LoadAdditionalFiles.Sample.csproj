@@ -15,9 +15,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="TestFile.cs"/>
-        <AdditionalFiles Include="TestFile.cs"/>
-        <AdditionalFiles Include="grocerylist.txt"/>
+        <AdditionalFiles Include="Files\grocerylist.txt" />
+        <AdditionalFiles Include="..\Kehlet.Generators.LoadAdditionalFiles\AdditionalFilesGenerator.cs" Link="Files\AdditionalFilesGenerator.cs"/>
     </ItemGroup>
 
 </Project>
