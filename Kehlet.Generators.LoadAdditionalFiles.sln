@@ -21,8 +21,6 @@ Global
 		{35CADCC7-272D-400B-8C44-9FEC65F466EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35CADCC7-272D-400B-8C44-9FEC65F466EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DAF8ECF-09B3-4DA1-9A06-A7176ACA7538}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DAF8ECF-09B3-4DA1-9A06-A7176ACA7538}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DAF8ECF-09B3-4DA1-9A06-A7176ACA7538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DAF8ECF-09B3-4DA1-9A06-A7176ACA7538}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
