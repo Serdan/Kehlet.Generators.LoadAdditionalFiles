@@ -11,35 +11,15 @@ namespace Kehlet.Generators.LoadAdditionalFiles;
 [Generator]
 public class AdditionalFilesGenerator : IIncrementalGenerator
 {
-    private const string AttributeNamespace = "Kehlet.Generators.Attributes";
     private const string AttributeName = "LoadAdditionalFilesAttribute";
-    private const string AttributeFqn = $"{AttributeNamespace}.{AttributeName}";
-
-    private const string AttributeSourceCode =
-        // language=cs
-        $$"""
-        #nullable enable
-
-        using System;
-
-        namespace {{AttributeNamespace}};
-
-        [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-        internal sealed class {{AttributeName}} : Attribute
-        {
-            public string? RegexFilter { get; set; }
-            public bool OmitFileExtension { get; set; } = true;
-            public string PropertyNamePrefix { get; set; } = "";
-            public string PropertyNameSuffix { get; set; } = "";
-        }
-
-        """;
+    private const string AttributeFqn = $"Kehlet.Generators.Attributes.{AttributeName}";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         context.RegisterPostInitializationOutput(ctx => ctx.AddSource(
             $"{AttributeName}.g.cs",
-            SourceText.From(AttributeSourceCode, Encoding.UTF8)));
+            SourceText.From(StaticTypes.LoadAdditionalFilesAttributeSource, Encoding.UTF8))
+        );
 
         var texts = context.AdditionalTextsProvider.Collect();
         var provider = context.SyntaxProvider
