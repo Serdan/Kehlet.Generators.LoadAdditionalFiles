@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.RegularExpressions;
+using Kehlet.Generators.Attributes;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -8,22 +9,36 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace Kehlet.Generators.LoadAdditionalFiles;
 
+using static StaticContent;
+
 [Generator]
 public class AdditionalFilesGenerator : IIncrementalGenerator
 {
-    private const string AttributeName = "LoadAdditionalFilesAttribute";
-    private const string AttributeFqn = $"Kehlet.Generators.Attributes.{AttributeName}";
+    private static Diagnostic InvalidMemberKindDiagnostic(string value, Location? location) =>
+        Diagnostic.Create(
+            new("LAF0001", "Invalid MemberKind", "The value given for MemberKind is not supported: {0}", "SourceGenerator", DiagnosticSeverity.Error, true),
+            location,
+            value
+        );
+
+    private static Diagnostic FileNotFoundDiagnostic(string fileName, Location? location) =>
+        Diagnostic.Create(
+            new("LAF0002", "Loading file failed", "File could not be loaded by the generator: {0}", "SourceGenerator", DiagnosticSeverity.Warning, true),
+            location,
+            fileName
+        );
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        context.RegisterPostInitializationOutput(ctx => ctx.AddSource(
-            $"{AttributeName}.g.cs",
-            SourceText.From(StaticTypes.LoadAdditionalFilesAttributeSource, Encoding.UTF8))
-        );
+        context.RegisterPostInitializationOutput(ctx =>
+        {
+            ctx.AddSource($"{AttributeName}.g.cs", SourceText.From(LoadAdditionalFilesAttributeSource, Encoding.UTF8));
+            ctx.AddSource("MemberKind.g.cs", SourceText.From(MemberKindSource, Encoding.UTF8));
+        });
 
         var texts = context.AdditionalTextsProvider.Collect();
         var provider = context.SyntaxProvider
-                              .ForAttributeWithMetadataName(AttributeFqn, IsValidTarget, Transform)
+                              .ForAttributeWithMetadataName(AttributeFullName, IsValidTarget, Transform)
                               .SelectMany((x, _) => x is null ? ImmutableArray<TypeTarget>.Empty : ImmutableArray.Create(x.Value))
                               .Combine(texts);
 
@@ -36,8 +51,9 @@ public class AdditionalFilesGenerator : IIncrementalGenerator
     private readonly record struct FileTarget(
         string? RegexFilter,
         bool OmitFileExtension,
-        string PropertyNamePrefix,
-        string PropertyNameSuffix
+        string MemberNamePrefix,
+        string MemberNameSuffix,
+        MemberKind MemberKind
     );
 
     private readonly record struct TypeTarget(
@@ -61,10 +77,7 @@ public class AdditionalFilesGenerator : IIncrementalGenerator
             builder.Append("static ");
         }
 
-        if (syntax.Modifiers.Any(SyntaxKind.PartialKeyword))
-        {
-            builder.Append("partial ");
-        }
+        builder.Append("partial ");
 
         if (syntax is RecordDeclarationSyntax record)
         {
@@ -91,6 +104,7 @@ public class AdditionalFilesGenerator : IIncrementalGenerator
             var omit = true;
             var prefix = "";
             var suffix = "";
+            var memberKind = MemberKind.Field;
 
             foreach (var namedArgument in attribute.NamedArguments)
             {
@@ -102,16 +116,19 @@ public class AdditionalFilesGenerator : IIncrementalGenerator
                     case nameof(FileTarget.OmitFileExtension):
                         omit = namedArgument.Value.Value as bool? ?? true;
                         break;
-                    case nameof(FileTarget.PropertyNamePrefix):
+                    case nameof(FileTarget.MemberNamePrefix):
                         prefix = namedArgument.Value.Value as string ?? "";
                         break;
-                    case nameof(FileTarget.PropertyNameSuffix):
+                    case nameof(FileTarget.MemberNameSuffix):
                         suffix = namedArgument.Value.Value as string ?? "";
+                        break;
+                    case nameof(FileTarget.MemberKind):
+                        memberKind = namedArgument.Value.Value is int value ? (MemberKind) value : MemberKind.Field;
                         break;
                 }
             }
 
-            fileTargets.Add(new(regex, omit, prefix, suffix));
+            fileTargets.Add(new(regex, omit, prefix, suffix, memberKind));
         }
 
         return new(syntax.Identifier.Text, builder.ToString(), ns, fileTargets.ToImmutable());
@@ -135,7 +152,7 @@ public class AdditionalFilesGenerator : IIncrementalGenerator
 
         foreach (var fileTarget in typeTarget.FileTargets)
         {
-            EmitMembers(fileTarget, texts, builder, context.CancellationToken);
+            EmitMembers(context, fileTarget, texts, builder, context.CancellationToken);
         }
 
         var ns = string.IsNullOrWhiteSpace(typeTarget.Namespace) ? "" : $"namespace {typeTarget.Namespace};";
@@ -146,18 +163,87 @@ public class AdditionalFilesGenerator : IIncrementalGenerator
         context.AddSource($"{typeTarget.Name}.g.cs", SourceText.From(source, Encoding.UTF8));
     }
 
-    private static void EmitMembers(FileTarget fileTarget, ImmutableArray<AdditionalText> texts, StringBuilder builder, CancellationToken ct)
+    private static Unit EmitField(string memberName, string quotes, string sourceText, StringBuilder builder)
     {
-        const string emptyMemberFormat = """    public const string {0} = "";""";
+        const string memberDeclFormat = "    public static readonly string {0} =";
+        const string emptyMemberFormat = $"""{memberDeclFormat} "";""";
         const string memberFormat =
-            """
-                public const string {0} =
+            $$"""
+            {{memberDeclFormat}}
             {1}
             {2}
             {1};
 
             """;
 
+        if (string.IsNullOrEmpty(sourceText))
+        {
+            builder.AppendFormat(emptyMemberFormat, memberName);
+            builder.AppendLine();
+        }
+        else
+        {
+            builder.AppendFormat(memberFormat, memberName, quotes, sourceText);
+        }
+
+        return default;
+    }
+
+    private static Unit EmitConstant(string memberName, string quotes, string sourceText, StringBuilder builder)
+    {
+        const string memberDeclFormat = "    public const string {0} =";
+        const string emptyMemberFormat = $"""{memberDeclFormat} "";""";
+        const string memberFormat =
+            $$"""
+            {{memberDeclFormat}}
+            {1}
+            {2}
+            {1};
+
+            """;
+
+        if (string.IsNullOrEmpty(sourceText))
+        {
+            builder.AppendFormat(emptyMemberFormat, memberName);
+            builder.AppendLine();
+        }
+        else
+        {
+            builder.AppendFormat(memberFormat, memberName, quotes, sourceText);
+        }
+
+        return default;
+    }
+
+    private static Unit EmitProperty(string memberName, string quotes, string sourceText, StringBuilder builder)
+    {
+        const string memberDeclFormat = "    public static string {0} =>";
+        const string emptyMemberFormat = $"""{memberDeclFormat} "";""";
+        const string memberFormat =
+            $$"""
+            {{memberDeclFormat}}
+            {1}
+            {2}
+            {1};
+
+            """;
+
+        if (string.IsNullOrEmpty(sourceText))
+        {
+            builder.AppendFormat(emptyMemberFormat, memberName);
+            builder.AppendLine();
+        }
+        else
+        {
+            builder.AppendFormat(memberFormat, memberName, quotes, sourceText);
+        }
+
+        return default;
+    }
+
+    private static void EmitMembers(SourceProductionContext context, FileTarget fileTarget, ImmutableArray<AdditionalText> texts, StringBuilder builder,
+        CancellationToken ct)
+    {
         foreach (var text in texts)
         {
             if (fileTarget.RegexFilter is { Length: > 0 } pattern && Regex.IsMatch(text.Path, pattern, RegexOptions.Compiled) is false)
@@ -174,28 +260,27 @@ public class AdditionalFilesGenerator : IIncrementalGenerator
             var sourceText = text.GetText(ct)?.ToString();
             if (sourceText is null)
             {
+                context.Report(FileNotFoundDiagnostic(fileName, null));
                 builder.AppendFormat("    // Failed to read file: {0}", fileName);
                 continue;
             }
 
-            var name = fileName.Replace('.', '_').Replace('`', '_');
-            name = $"{fileTarget.PropertyNamePrefix}{name}{fileTarget.PropertyNameSuffix}";
+            var memberName = fileName.Replace('.', '_').Replace('`', '_');
+            memberName = $"{fileTarget.MemberNamePrefix}{memberName}{fileTarget.MemberNameSuffix}";
 
-            if (string.IsNullOrEmpty(sourceText))
+            var quotes = GetRawStringQuotes(sourceText);
+
+            _ = fileTarget.MemberKind switch
             {
-                builder.AppendFormat("    // File is empty: {0}", fileName);
-                builder.AppendLine();
-                builder.AppendFormat(emptyMemberFormat, name);
-                builder.AppendLine();
-                continue;
-            }
-
-            var count = Math.Max(Count(sourceText), 3);
-            builder.AppendFormat(memberFormat, name, new string('"', count), text.GetText(ct));
+                MemberKind.Field => EmitField(memberName, quotes, sourceText, builder),
+                MemberKind.Constant => EmitConstant(memberName, quotes, sourceText, builder),
+                MemberKind.Property => EmitProperty(memberName, quotes, sourceText, builder),
+                var value => context.Report(InvalidMemberKindDiagnostic(value.ToString(), null))
+            };
         }
     }
 
-    private static int Count(string file)
+    private static string GetRawStringQuotes(string file)
     {
         var count = 0;
         var currentCount = 0;
@@ -217,6 +302,6 @@ public class AdditionalFilesGenerator : IIncrementalGenerator
             }
         }
 
-        return count;
+        return new('"', Math.Max(3, count));
     }
 }
