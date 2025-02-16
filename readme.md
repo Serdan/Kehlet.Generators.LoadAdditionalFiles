@@ -1,10 +1,10 @@
-Annotate partial class with `LoadAdditionalFilesAttribute` to have all additional files in the project statically loaded into const string fields of the class.
+Annotate partial class with `LoadAdditionalFilesAttribute` to have additional files in the project statically loaded into const string fields of the class.
 
 Notably this is a safe and performant way for source generators to load static files.
 
 Source:
 ```csharp
-[LoadAdditionalFiles]
+[LoadAdditionalFiles(RegexFilter = "\.md$", PropertyNameSuffix = "Markdown")]
 public static partial class MyFiles;
 ```
 
@@ -15,14 +15,14 @@ Additional file:
 
 Project:
 ```
-    <AdditionalFiles Include="readme.md"/>
+    <AdditionalFiles Include="Readme.md"/>
 ```
 
 Generated:
 ```csharp
 static partial class MyFiles
 {
-    public const string readme_md =
+    public const string ReadmeMarkdown =
 """
 # Hi! This is a readme!
 """;
