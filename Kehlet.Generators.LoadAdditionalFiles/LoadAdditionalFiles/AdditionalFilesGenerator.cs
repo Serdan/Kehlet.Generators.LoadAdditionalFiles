@@ -22,18 +22,14 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
             ctx.AddSource($"{nameof(MemberKind)}.g.cs", SourceText.From(MemberKindSource, Encoding.UTF8));
         });
 
-        var textResultProvider = context.AdditionalTextsProvider.Select(Parser.GetText);
-        var textValueProvider = textResultProvider.Values().Collect();
-        var textErrorProvider = textResultProvider.Errors();
+        var (textValues, textErrors) = context.AdditionalTextsProvider.Select(Parser.GetText).Partition();
+        var (typeValues, typeErrors) = context.SyntaxProvider.ForAttributeWithMetadataName(AttributeFullName, IsValidTarget, Parser.Parse).Partition();
 
-        var resultProvider = context.SyntaxProvider.ForAttributeWithMetadataName(AttributeFullName, IsValidTarget, Parser.Parse);
+        var typeValuesWithTexts = typeValues.Combine(textValues.Collect());
 
-        var valueProvider = resultProvider.Values().Combine(textValueProvider);
-        var errorProvider = resultProvider.Errors();
-
-        context.RegisterSourceOutput(valueProvider, (ctx, tuple) => GenerateCode(ctx, tuple.Left, tuple.Right));
-        context.RegisterSourceOutput(errorProvider, ReportDiagnostics);
-        context.RegisterSourceOutput(textErrorProvider, ReportDiagnostics);
+        context.RegisterSourceOutput(typeValuesWithTexts, static (ctx, tuple) => GenerateCode(ctx, tuple.Left, tuple.Right));
+        context.RegisterSourceOutput(typeErrors, ReportDiagnostics);
+        context.RegisterSourceOutput(textErrors, ReportDiagnostics);
     }
 
     internal static bool IsValidTarget(SyntaxNode node, CancellationToken _) => node is TypeDeclarationSyntax;
