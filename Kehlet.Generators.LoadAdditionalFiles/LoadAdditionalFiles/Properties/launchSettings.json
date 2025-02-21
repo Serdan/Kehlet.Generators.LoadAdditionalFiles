@@ -3,7 +3,7 @@
   "profiles": {
     "DebugRoslynSourceGenerator": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "../Kehlet.Generators.LoadAdditionalFiles.Sample/Kehlet.Generators.LoadAdditionalFiles.Sample.csproj"
+      "targetProject": "../LoadAdditionalFiles.Sample/LoadAdditionalFiles.Sample.csproj"
     }
   }
 }

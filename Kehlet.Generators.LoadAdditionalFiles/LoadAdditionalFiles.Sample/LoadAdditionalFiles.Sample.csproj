@@ -15,9 +15,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="..\LoadAdditionalFiles\AdditionalFilesGenerator.cs">
-          <Link>Files\AdditionalFilesGenerator.cs</Link>
-        </AdditionalFiles>
+        <AdditionalFiles Include="..\LoadAdditionalFiles\*.cs" Visible="false" />
+        <AdditionalFiles Include="..\LoadAdditionalFiles\Data\*.cs" Visible="false" />
         <AdditionalFiles Include="Files\grocerylist.txt" />
     </ItemGroup>
 

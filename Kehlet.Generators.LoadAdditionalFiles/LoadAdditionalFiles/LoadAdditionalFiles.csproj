@@ -17,7 +17,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
         <Authors>Anders Kehlet</Authors>
-        <Version>1.0.4</Version>
+        <Version>1.0.6</Version>
 
         <StaticContentPath>..\LoadAdditionalFiles.StaticContent\Files</StaticContentPath>
         <DefaultAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</DefaultAssets>
@@ -28,7 +28,7 @@
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="all" IncludeAssets="$(DefaultAssets)"/>
         <PackageReference Include="Kehlet.SourceGenerator.Build" Version="1.0.0" PrivateAssets="all" IncludeAssets="$(DefaultAssets)"/>
         <PackageReference Include="Kehlet.SourceGenerator.Prelude" Version="1.0.4" PrivateAssets="all" IncludeAssets="$(DefaultAssets)"/>
-        <PackageReference Include="Kehlet.Generators.LoadAdditionalFiles" Version="1.0.3" PrivateAssets="all" IncludeAssets="$(DefaultAssets)"/>
+        <PackageReference Include="Kehlet.Generators.LoadAdditionalFiles" Version="1.0.5" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
         <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" IncludeAssets="$(DefaultAssets)"/>
     </ItemGroup>
 
@@ -50,16 +50,16 @@
             <DependentUpon>AdditionalFilesGenerator.cs</DependentUpon>
         </Compile>
         <Compile Update="Data\Resources.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Resources.resx</DependentUpon>
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
     </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Update="Data\Resources.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>Resources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 </Project>

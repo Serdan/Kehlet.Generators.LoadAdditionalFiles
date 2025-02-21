@@ -25,7 +25,7 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
         var textResultProvider = context.AdditionalTextsProvider.Select(Parser.GetText);
         var textValueProvider = textResultProvider.Values().Collect();
         var textErrorProvider = textResultProvider.Errors();
-        
+
         var resultProvider = context.SyntaxProvider.ForAttributeWithMetadataName(AttributeFullName, IsValidTarget, Parser.Parse);
 
         var valueProvider = resultProvider.Values().Combine(textValueProvider);

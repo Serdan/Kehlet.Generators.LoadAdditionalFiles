@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace Kehlet.Generators.Attributes;
+﻿namespace Kehlet.Generators.Attributes;
 
 internal enum MemberKind
 {

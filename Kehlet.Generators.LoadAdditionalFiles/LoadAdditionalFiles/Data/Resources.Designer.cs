@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Kehlet.Generators.LoadAdditionalFiles {
+namespace Kehlet.Generators.LoadAdditionalFiles.Data {
     using System;
     
     
@@ -38,7 +38,7 @@ namespace Kehlet.Generators.LoadAdditionalFiles {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kehlet.Generators.LoadAdditionalFiles.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kehlet.Generators.LoadAdditionalFiles.Data.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

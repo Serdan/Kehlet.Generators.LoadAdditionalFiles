@@ -99,7 +99,7 @@ public partial class AdditionalFilesGenerator
 
             var declaration = BuildDeclaration(syntax);
             var ns = ((INamedTypeSymbol)context.TargetSymbol).GetContainingNamespace();
-            
+
             return new TypeTarget(syntax.Identifier.Text, declaration, ns, fileTargets.ToImmutable());
         }
 
