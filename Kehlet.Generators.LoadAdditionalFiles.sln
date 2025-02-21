@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kehlet.Generators.LoadAdditionalFiles", "Kehlet.Generators.LoadAdditionalFiles\Kehlet.Generators.LoadAdditionalFiles\Kehlet.Generators.LoadAdditionalFiles.csproj", "{A10A02E6-5266-4262-A035-5E374EE76CAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles", "Kehlet.Generators.LoadAdditionalFiles\LoadAdditionalFiles\LoadAdditionalFiles.csproj", "{A10A02E6-5266-4262-A035-5E374EE76CAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kehlet.Generators.LoadAdditionalFiles.Sample", "Kehlet.Generators.LoadAdditionalFiles\Kehlet.Generators.LoadAdditionalFiles.Sample\Kehlet.Generators.LoadAdditionalFiles.Sample.csproj", "{35CADCC7-272D-400B-8C44-9FEC65F466EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.Sample", "Kehlet.Generators.LoadAdditionalFiles\LoadAdditionalFiles.Sample\LoadAdditionalFiles.Sample.csproj", "{35CADCC7-272D-400B-8C44-9FEC65F466EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.StaticContent", "Kehlet.Generators.LoadAdditionalFiles\LoadAdditionalFiles.StaticContent\LoadAdditionalFiles.StaticContent.csproj", "{8DAF8ECF-09B3-4DA1-9A06-A7176ACA7538}"
 EndProject

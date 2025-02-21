@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Kehlet.Generators.LoadAdditionalFiles\Kehlet.Generators.LoadAdditionalFiles.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+        <ProjectReference Include="..\LoadAdditionalFiles\LoadAdditionalFiles.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
     <ItemGroup>
@@ -15,8 +15,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <AdditionalFiles Include="..\LoadAdditionalFiles\AdditionalFilesGenerator.cs">
+          <Link>Files\AdditionalFilesGenerator.cs</Link>
+        </AdditionalFiles>
         <AdditionalFiles Include="Files\grocerylist.txt" />
-        <AdditionalFiles Include="..\Kehlet.Generators.LoadAdditionalFiles\AdditionalFilesGenerator.cs" Link="Files\AdditionalFilesGenerator.cs"/>
     </ItemGroup>
 
 </Project>
