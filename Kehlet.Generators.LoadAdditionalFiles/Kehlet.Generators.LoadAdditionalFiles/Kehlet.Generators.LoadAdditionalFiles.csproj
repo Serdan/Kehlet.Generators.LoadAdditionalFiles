@@ -9,7 +9,7 @@
 
         <RootNamespace>Kehlet.Generators.LoadAdditionalFiles</RootNamespace>
         <Title>AutoLoadAdditionalFiles</Title>
-        <Description>Loads additional files in the project into const string fields of marked class.</Description>
+        <Description>Statically loads additional files in the project into members of marked class.</Description>
         <Copyright>Anders Kehlet</Copyright>
         <PackageProjectUrl>https://github.com/Serdan/Kehlet.Generators.LoadAdditionalFiles</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Serdan/Kehlet.Generators.LoadAdditionalFiles</RepositoryUrl>
@@ -22,21 +22,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="$(StaticContentPath)\LoadAdditionalFilesAttribute.cs" Link="StaticContent\LoadAdditionalFilesAttribute.cs"/>
-        <AdditionalFiles Include="$(StaticContentPath)\MemberKind.cs" Link="StaticContent\MemberKind.cs"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" PrivateAssets="all"/>
+        <PackageReference Include="Kehlet.SourceGenerator.Prelude" Version="1.0.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Kehlet.SourceGenerator.Build" Version="1.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.10.0" PrivateAssets="all"/>
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="IsExternalInit" Version="1.0.3">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Kehlet.Build.DefaultSourceGeneratorProps" Version="1.1.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -47,6 +46,33 @@
     </ItemGroup>
 
     <ItemGroup>
+        <AdditionalFiles Include="$(StaticContentPath)\*.cs" Visible="false"/>
+        <AdditionalFiles Include="AnalyzerReleases.Shipped.md" Visible="false"/>
+        <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" Visible="false"/>
+    </ItemGroup>
+    
+    <ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)..\..\readme.md" Pack="true" PackagePath="" Visible="false"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="AdditionalFilesGenerator_Parser.cs">
+            <DependentUpon>AdditionalFilesGenerator.cs</DependentUpon>
+        </Compile>
+        <Compile Update="AdditionalFilesGenerator_Emitter.cs">
+            <DependentUpon>AdditionalFilesGenerator.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Data\Resources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Data\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 </Project>
