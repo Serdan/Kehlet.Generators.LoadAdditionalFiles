@@ -3,7 +3,6 @@ using System.Text;
 using Kehlet.Generators.Attributes;
 using Kehlet.Generators.LoadAdditionalFiles.Data;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
 namespace Kehlet.Generators.LoadAdditionalFiles;
@@ -23,7 +22,7 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
         });
 
         var (textValues, textErrors) = context.AdditionalTextsProvider.Select(Parser.GetText).Partition();
-        var (typeValues, typeErrors) = context.SyntaxProvider.ForAttributeWithMetadataName(AttributeFullName, IsValidTarget, Parser.Parse).Partition();
+        var (typeValues, typeErrors) = context.SyntaxForAttribute(AttributeFullName, SyntaxTarget.Type, Parser.Parse).Partition();
 
         var typeValuesWithTexts = typeValues.Combine(textValues.Collect());
 
@@ -32,15 +31,13 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
         context.RegisterSourceOutput(textErrors, ReportDiagnostics);
     }
 
-    internal static bool IsValidTarget(SyntaxNode node, CancellationToken _) => node is TypeDeclarationSyntax;
-
     internal static void ReportDiagnostics(SourceProductionContext context, TypeTargetError error)
     {
         var diagnostic = error.Errors switch
         {
-            TypeTargetErrors.InvalidMemberKind => InvalidMemberKindDiagnostic(error.Details, error.Location),
-            TypeTargetErrors.FileNotFound => FileNotFoundDiagnostic(error.Details, error.Location),
-            TypeTargetErrors.MissingPartialKeyword => MissingPartialKeywordDiagnostic(error.Details, error.Location),
+            TypeTargetErrors.InvalidMemberKind => InvalidMemberKindDiagnostic(error.Details, error.Location.ToNullable()?.ToLocation()),
+            TypeTargetErrors.FileNotFound => FileNotFoundDiagnostic(error.Details),
+            TypeTargetErrors.MissingPartialKeyword => MissingPartialKeywordDiagnostic(error.Details, error.Location.ToNullable()?.ToLocation()),
             _ => throw new InvalidOperationException()
         };
 

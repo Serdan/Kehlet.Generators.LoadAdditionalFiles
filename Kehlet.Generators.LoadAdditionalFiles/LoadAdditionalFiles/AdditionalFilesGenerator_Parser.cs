@@ -80,7 +80,8 @@ public partial class AdditionalFilesGenerator
 
             if (syntax.Modifiers.Any(SyntaxKind.PartialKeyword) is false)
             {
-                return new TypeTargetError(TypeTargetErrors.MissingPartialKeyword, syntax.Identifier.Text, syntax.Identifier.GetLocation());
+                var identifierLocation = syntax.Identifier.GetLocation();
+                return new TypeTargetError(TypeTargetErrors.MissingPartialKeyword, syntax.Identifier.Text, LocationData.FromLocation(identifierLocation));
             }
 
             var fileTargets = ImmutableArray.CreateBuilder<FileTarget>();
@@ -89,8 +90,8 @@ public partial class AdditionalFilesGenerator
                 var fileTarget = CreateTarget(attribute);
                 if (EnumHelper.HasMember<MemberKind>((int)fileTarget.MemberKind) is false)
                 {
-                    return Error(new TypeTargetError(TypeTargetErrors.InvalidMemberKind, syntax.Identifier.Text,
-                        attribute.ApplicationSyntaxReference?.GetSyntax().GetLocation()));
+                    var location = attribute.ApplicationSyntaxReference?.GetSyntax().GetLocation();
+                    return Error(new TypeTargetError(TypeTargetErrors.InvalidMemberKind, syntax.Identifier.Text, LocationData.FromLocation(location)));
                 }
 
 
@@ -109,10 +110,10 @@ public partial class AdditionalFilesGenerator
             var content = text.GetText(ct)?.ToString();
             if (content is null)
             {
-                return Error(new TypeTargetError(TypeTargetErrors.FileNotFound, path, null));
+                return new TypeTargetError(TypeTargetErrors.FileNotFound, path, None);
             }
 
-            return Ok(new FileData(path, content));
+            return new FileData(path, content);
         }
     }
 }

@@ -16,8 +16,8 @@ internal static class Diagnostics
     public static Diagnostic InvalidMemberKindDiagnostic(string value, Location? location) =>
         Diagnostic.Create(invalidMemberKind, location, value);
 
-    public static Diagnostic FileNotFoundDiagnostic(string fileName, Location? location) =>
-        Diagnostic.Create(fileNotFound, location, fileName);
+    public static Diagnostic FileNotFoundDiagnostic(string fileName) =>
+        Diagnostic.Create(fileNotFound, null, fileName);
 
     public static Diagnostic MissingPartialKeywordDiagnostic(string typeName, Location? location) =>
         Diagnostic.Create(missingPartialKeyword, location, typeName);
