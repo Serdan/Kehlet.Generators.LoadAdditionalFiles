@@ -4,21 +4,12 @@ namespace Kehlet.Generators.LoadAdditionalFiles.Data;
 
 internal static class Diagnostics
 {
-    private static readonly DiagnosticDescriptor invalidMemberKind =
+    public static readonly DiagnosticDescriptor InvalidMemberKind =
         new("AKLAF0001", Resources.AKLAF0001_Title, Resources.AKLAF0001_MessageFormat, "Usage", DiagnosticSeverity.Error, true);
 
-    private static readonly DiagnosticDescriptor fileNotFound =
+    public static readonly DiagnosticDescriptor FileNotFound =
         new("AKLAF0002", Resources.AKLAF0002_Title, Resources.AKLAF0002_MessageFormat, "Usage", DiagnosticSeverity.Warning, true);
 
-    private static readonly DiagnosticDescriptor missingPartialKeyword =
+    public static readonly DiagnosticDescriptor MissingPartialKeyword =
         new("AKLAF0003", Resources.AKLAF0003_Title, Resources.AKLAF0003_MessageFormat, "Usage", DiagnosticSeverity.Warning, true);
-
-    public static Diagnostic InvalidMemberKindDiagnostic(string value, Location? location) =>
-        Diagnostic.Create(invalidMemberKind, location, value);
-
-    public static Diagnostic FileNotFoundDiagnostic(string fileName) =>
-        Diagnostic.Create(fileNotFound, null, fileName);
-
-    public static Diagnostic MissingPartialKeywordDiagnostic(string typeName, Location? location) =>
-        Diagnostic.Create(missingPartialKeyword, location, typeName);
 }

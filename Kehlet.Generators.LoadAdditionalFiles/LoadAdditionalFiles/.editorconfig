@@ -5,6 +5,7 @@ root = true
 indent_style = space
 
 resharper_member_can_be_private_global_highlighting = none
+resharper_unused_method_return_value_global_highlighting = none
 
 # Xml files
 [*.xml]

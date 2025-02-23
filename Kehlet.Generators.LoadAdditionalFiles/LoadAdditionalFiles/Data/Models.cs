@@ -1,13 +1,12 @@
 ﻿using System.Collections.Immutable;
 using Kehlet.Generators.Attributes;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
 
 namespace Kehlet.Generators.LoadAdditionalFiles.Data;
 
-internal readonly record struct FileData(string Path, string Content);
+internal record FileData(string Path, string Content);
 
-internal readonly record struct FileTarget(
+internal record TargetOptions(
     string? RegexFilter,
     bool OmitFileExtension,
     string MemberNamePrefix,
@@ -15,42 +14,34 @@ internal readonly record struct FileTarget(
     MemberKind MemberKind
 );
 
-internal readonly record struct TypeTarget(
-    string Name,
-    string Declaration,
-    string Namespace,
-    ImmutableArray<FileTarget> FileTargets
+internal record TargetData(
+    TypeData TypeData,
+    ImmutableArray<TargetOptions> FileTargets
 );
 
-internal enum TypeTargetErrors
+internal enum GeneratorErrors
 {
     InvalidMemberKind,
     FileNotFound,
     MissingPartialKeyword
 }
 
-internal readonly record struct LocationData(string FilePath, TextSpan SourceSpan, LinePositionSpan LinePositionSpan)
+internal record GeneratorError(GeneratorErrors Error, string Details, Option<SafeLocation> Location) : IDiagnostic
 {
-    public Location ToLocation() => Location.Create(FilePath, SourceSpan, LinePositionSpan);
-
-    public static Option<LocationData> FromLocation(Location? location)
+    public Unit Report(SourceProductionContext context)
     {
-        if (location is null)
+        var descriptor = Error switch
         {
-            return None;
-        }
-        
-        var filePath = location.SourceTree?.FilePath;
-        if (filePath is null)
-        {
-            return None;
-        }
+            GeneratorErrors.InvalidMemberKind => Diagnostics.InvalidMemberKind,
+            GeneratorErrors.FileNotFound => Diagnostics.FileNotFound,
+            GeneratorErrors.MissingPartialKeyword => Diagnostics.MissingPartialKeyword,
+            _ => throw new ArgumentOutOfRangeException()
+        };
 
-        var sourceSpan = location.SourceSpan;
-        var linePositionSpan = location.GetLineSpan().Span;
+        var diagnostic = Diagnostic.Create(descriptor, Location.ToObject()?.Location, Details);
 
-        return new LocationData(filePath, sourceSpan, linePositionSpan);
+        context.ReportDiagnostic(diagnostic);
+
+        return unit;
     }
 }
-
-internal readonly record struct TypeTargetError(TypeTargetErrors Errors, string Details, Option<LocationData> Location);

@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
-        <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <AvoidCycleErrorOnSelfReference>true</AvoidCycleErrorOnSelfReference>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 
@@ -17,19 +17,24 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
         <Authors>Anders Kehlet</Authors>
-        <Version>1.0.6</Version>
+        <Version>1.0.7</Version>
 
         <StaticContentPath>..\LoadAdditionalFiles.StaticContent\Files</StaticContentPath>
         <DefaultAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</DefaultAssets>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <PackageOutputPath>$(HomeDir)\Nuget</PackageOutputPath>
+    </PropertyGroup>
+
     <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.10.0" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.12.0" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="all" IncludeAssets="$(DefaultAssets)"/>
-        <PackageReference Include="Kehlet.SourceGenerator.Build" Version="1.0.0" PrivateAssets="all" IncludeAssets="$(DefaultAssets)"/>
-        <PackageReference Include="Kehlet.SourceGenerator.Prelude" Version="1.0.6" PrivateAssets="all" IncludeAssets="$(DefaultAssets)" />
-        <PackageReference Include="Kehlet.Generators.LoadAdditionalFiles" Version="1.0.6" PrivateAssets="all" IncludeAssets="$(DefaultAssets)" />
+        <PackageReference Include="Kehlet.SourceGenerator.Build" Version="1.0.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+        <PackageReference Include="Kehlet.SourceGenerator.Prelude" Version="1.1.15" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+        <PackageReference Include="Kehlet.Generators.LoadAdditionalFiles" Version="1.0.6" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
         <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" IncludeAssets="$(DefaultAssets)"/>
+        <PackageReference Include="Microsoft.Bcl.Memory" Version="9.0.2" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
@@ -43,23 +48,23 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="AdditionalFilesGenerator_Parser.cs">
-            <DependentUpon>AdditionalFilesGenerator.cs</DependentUpon>
-        </Compile>
-        <Compile Update="AdditionalFilesGenerator_Emitter.cs">
+        <Compile Update="AdditionalFilesGenerator.Parser.cs">
             <DependentUpon>AdditionalFilesGenerator.cs</DependentUpon>
         </Compile>
         <Compile Update="Data\Resources.Designer.cs">
-          <DesignTime>True</DesignTime>
-          <AutoGen>True</AutoGen>
-          <DependentUpon>Resources.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="AdditionalFilesGeneratorEmitter.cs">
+          <DependentUpon>AdditionalFilesGenerator.cs</DependentUpon>
         </Compile>
     </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Update="Data\Resources.resx">
-          <Generator>ResXFileCodeGenerator</Generator>
-          <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 </Project>
