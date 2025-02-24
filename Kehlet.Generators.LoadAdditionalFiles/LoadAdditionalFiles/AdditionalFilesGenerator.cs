@@ -16,18 +16,13 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
         context.RegisterType<LoadAdditionalFilesAttribute>(LoadAdditionalFilesAttributeSource);
         context.RegisterType<MemberKind>(MemberKindSource);
 
-        var (textValues, textErrors) = context.AdditionalTextsProvider.Select(Parser.GetText).Partition();
-        var (typeValues, typeErrors) = context.SyntaxForAttribute(AttributeFullName, SyntaxTarget.Type, Parser.Parse).Partition();
+        var textValues = context.AdditionalTextsProvider.Select(Parser.GetText).Values();
+        var typeValues = context.SyntaxForAttribute(AttributeFullName, SyntaxTarget.Type, Parser.Parse).Values();
 
         var typeValuesWithTexts = typeValues.Combine(textValues.Collect().WithComparer(Equality<FileData>.ArrayComparer));
 
         context.RegisterSourceOutput(typeValuesWithTexts, static (ctx, tuple) => GenerateCode(ctx, tuple.Left, tuple.Right));
-        context.RegisterSourceOutput(typeErrors, ReportDiagnostics);
-        context.RegisterSourceOutput(textErrors, ReportDiagnostics);
     }
-
-    internal static void ReportDiagnostics(SourceProductionContext context, IDiagnostic error) =>
-        error.Report(context);
 
     internal static void GenerateCode(SourceProductionContext context, TargetData targetData, ImmutableArray<FileData> texts)
     {

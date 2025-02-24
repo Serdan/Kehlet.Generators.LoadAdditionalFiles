@@ -7,7 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\LoadAdditionalFiles\LoadAdditionalFiles.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\LoadAdditionalFiles\LoadAdditionalFiles.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+        <ProjectReference Include="..\LoadAdditionalFiles.Analyzer\LoadAdditionalFiles.Analyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -15,9 +16,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="..\LoadAdditionalFiles\*.cs" Visible="false" />
-        <AdditionalFiles Include="..\LoadAdditionalFiles\Data\*.cs" Visible="false" />
-        <AdditionalFiles Include="Files\grocerylist.txt" />
+        <AdditionalFiles Include="..\LoadAdditionalFiles\*.cs" Visible="false"/>
+        <AdditionalFiles Include="..\LoadAdditionalFiles\Data\*.cs" Visible="false"/>
+        <AdditionalFiles Include="Files\grocerylist.txt"/>
     </ItemGroup>
 
 </Project>
