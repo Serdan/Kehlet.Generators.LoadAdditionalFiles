@@ -6,7 +6,7 @@ using Kehlet.SourceGenerator.Source;
 
 namespace Kehlet.Generators.LoadAdditionalFiles;
 
-internal static class AdditionalFilesGeneratorEmitter
+internal static class EmitterExtensions
 {
     public static string GetRawStringQuotes(string file)
     {
@@ -44,35 +44,30 @@ internal static class AdditionalFilesGeneratorEmitter
 
     public static IEmitter Field(this IEmitter emitter, string memberName, string quotes, string sourceText)
     {
-        emitter.Emit($"""public static readonly string {memberName} =""");
+        emitter.Tabs().Append($"public static readonly string {memberName} =");
         return string.IsNullOrEmpty(sourceText)
             ? emitter.Line(""" "";""")
-            : emitter.StringLiteral(quotes, sourceText);
+            : emitter.NewLine().StringLiteral(quotes, sourceText);
     }
 
     public static IEmitter Constant(this IEmitter emitter, string memberName, string quotes, string sourceText)
     {
-        emitter.Emit($"public const string {memberName} =");
+        emitter.Tabs().Append($"public const string {memberName} =");
         return string.IsNullOrEmpty(sourceText)
             ? emitter.Line(""" "";""")
-            : emitter.StringLiteral(quotes, sourceText);
+            : emitter.NewLine().StringLiteral(quotes, sourceText);
     }
 
     public static IEmitter Property(this IEmitter emitter, string memberName, string quotes, string sourceText)
     {
-        emitter.Emit($"public static string {memberName} =>");
+        emitter.Tabs().Append($"public static string {memberName} =>");
         return string.IsNullOrEmpty(sourceText)
             ? emitter.Line(""" "";""")
-            : emitter.StringLiteral(quotes, sourceText);
+            : emitter.NewLine().StringLiteral(quotes, sourceText);
     }
 
     public static IEmitter Member(this IEmitter emitter, TargetOptions targetOptions, string path, string content)
     {
-        if (targetOptions.RegexFilter is { Length: > 0 } pattern && Regex.IsMatch(path, pattern, RegexOptions.Compiled) is false)
-        {
-            return emitter;
-        }
-
         var fileName = targetOptions.OmitFileExtension
             ? Path.GetFileNameWithoutExtension(path)
             : Path.GetFileName(path);
@@ -95,35 +90,31 @@ internal static class AdditionalFilesGeneratorEmitter
     {
         foreach (var (path, content) in texts)
         {
-            emitter.Member(targetOptions, path, content);
+            if (targetOptions.RegexFilter is { Length: > 0 } pattern && Regex.IsMatch(path, pattern, RegexOptions.Compiled) is false)
+            {
+                continue;
+            }
+
+            emitter.Member(targetOptions, path, content)
+                   .NewLine();
         }
 
         return emitter;
     }
+}
 
-    public static IEmitter TypeBody(this IEmitter emitter, TargetData targetData, ImmutableArray<FileData> texts)
+public partial class AdditionalFilesGenerator
+{
+    internal class Emitter(TargetData targetData, ImmutableArray<FileData> texts) : TypeEmitter
     {
-        foreach (var targetOptions in targetData.FileTargets)
+        public override IEmitter TypeBody(IEmitter emitter)
         {
-            emitter.Members(targetOptions, texts);
+            foreach (var targetOptions in targetData.FileTargets)
+            {
+                emitter.Members(targetOptions, texts);
+            }
+
+            return emitter;
         }
-
-        return emitter;
-    }
-
-    public static IEmitter Type(this IEmitter emitter, TargetData targetData, ImmutableArray<FileData> texts)
-    {
-        return emitter.Line(targetData.TypeData.TypeDeclaration)
-                      .OpenBrace()
-                      .TypeBody(targetData, texts)
-                      .CloseBrace();
-    }
-
-    public static IEmitter File(this IEmitter emitter, TargetData targetData, ImmutableArray<FileData> texts)
-    {
-        return emitter.NullableDirective()
-                      .Line(targetData.TypeData.NamespaceDeclaration)
-                      .Line()
-                      .Type(targetData, texts);
     }
 }

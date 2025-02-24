@@ -37,8 +37,7 @@ public partial class AdditionalFilesGenerator
 
             if (syntax.Modifiers.Any(SyntaxKind.PartialKeyword) is false)
             {
-                var identifierLocation = syntax.Identifier.GetLocation();
-                return new GeneratorError(GeneratorErrors.MissingPartialKeyword, syntax.Identifier.Text, SafeLocation.From(identifierLocation));
+                return new GeneratorError(GeneratorErrors.MissingPartialKeyword, syntax.Identifier.Text);
             }
 
             var fileTargets = ImmutableArray.CreateBuilder<TargetOptions>();
@@ -47,7 +46,7 @@ public partial class AdditionalFilesGenerator
                 var fileTarget = CreateTarget(attribute);
                 if (EnumHelper.HasMember<MemberKind>((int)fileTarget.MemberKind) is false)
                 {
-                    return new GeneratorError(GeneratorErrors.InvalidMemberKind, syntax.Identifier.Text, attribute.GetLocation());
+                    return new GeneratorError(GeneratorErrors.InvalidMemberKind, syntax.Identifier.Text);
                 }
 
                 fileTargets.Add(fileTarget);
@@ -55,7 +54,7 @@ public partial class AdditionalFilesGenerator
 
             var symbol = (INamedTypeSymbol)context.TargetSymbol;
 
-            return new TargetData(TypeData.From(symbol, syntax), fileTargets.ToImmutable());
+            return new TargetData(TypeFullData.From(symbol, syntax), fileTargets.ToImmutable());
         }
 
         public static Result<FileData, GeneratorError> GetText(AdditionalText text, CancellationToken ct)
@@ -64,7 +63,7 @@ public partial class AdditionalFilesGenerator
             var content = text.GetText(ct)?.ToString();
             if (content is null)
             {
-                return new GeneratorError(GeneratorErrors.FileNotFound, path, None);
+                return new GeneratorError(GeneratorErrors.FileNotFound, path);
             }
 
             return new FileData(path, content);

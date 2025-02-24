@@ -13,8 +13,8 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        context.RegisterStaticType<LoadAdditionalFilesAttribute>(LoadAdditionalFilesAttributeSource);
-        context.RegisterStaticType<MemberKind>(MemberKindSource);
+        context.RegisterType<LoadAdditionalFilesAttribute>(LoadAdditionalFilesAttributeSource);
+        context.RegisterType<MemberKind>(MemberKindSource);
 
         var (textValues, textErrors) = context.AdditionalTextsProvider.Select(Parser.GetText).Partition();
         var (typeValues, typeErrors) = context.SyntaxForAttribute(AttributeFullName, SyntaxTarget.Type, Parser.Parse).Partition();
@@ -29,6 +29,9 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
     internal static void ReportDiagnostics(SourceProductionContext context, IDiagnostic error) =>
         error.Report(context);
 
-    internal static void GenerateCode(SourceProductionContext context, TargetData targetData, ImmutableArray<FileData> texts) =>
-        context.AddSourceUTF8(targetData.TypeData.GetFileName(), Emitter.File(targetData, texts));
+    internal static void GenerateCode(SourceProductionContext context, TargetData targetData, ImmutableArray<FileData> texts)
+    {
+        var typeEmitter = new Emitter(targetData, texts);
+        context.AddSourceUTF8(targetData.TypeData.Type.GetFileName(), new StandardEmitter().File(typeEmitter, targetData.TypeData));
+    }
 }

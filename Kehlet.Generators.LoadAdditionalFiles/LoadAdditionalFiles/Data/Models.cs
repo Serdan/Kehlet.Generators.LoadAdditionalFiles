@@ -15,7 +15,7 @@ internal record TargetOptions(
 );
 
 internal record TargetData(
-    TypeData TypeData,
+    TypeFullData TypeData,
     ImmutableArray<TargetOptions> FileTargets
 );
 
@@ -26,7 +26,7 @@ internal enum GeneratorErrors
     MissingPartialKeyword
 }
 
-internal record GeneratorError(GeneratorErrors Error, string Details, Option<SafeLocation> Location) : IDiagnostic
+internal record GeneratorError(GeneratorErrors Error, string Details) : IDiagnostic
 {
     public Unit Report(SourceProductionContext context)
     {
@@ -38,7 +38,7 @@ internal record GeneratorError(GeneratorErrors Error, string Details, Option<Saf
             _ => throw new ArgumentOutOfRangeException()
         };
 
-        var diagnostic = Diagnostic.Create(descriptor, Location.ToObject()?.Location, Details);
+        var diagnostic = Diagnostic.Create(descriptor, null, Details);
 
         context.ReportDiagnostic(diagnostic);
 
