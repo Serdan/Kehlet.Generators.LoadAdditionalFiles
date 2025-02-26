@@ -7,18 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\LoadAdditionalFiles\LoadAdditionalFiles.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
-        <ProjectReference Include="..\LoadAdditionalFiles.Analyzer\LoadAdditionalFiles.Analyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.12.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <AdditionalFiles Include="..\LoadAdditionalFiles\*.cs" Visible="false"/>
         <AdditionalFiles Include="..\LoadAdditionalFiles\Data\*.cs" Visible="false"/>
         <AdditionalFiles Include="Files\grocerylist.txt"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Kehlet.Generators.LoadAdditionalFiles" Version="1.0.30">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
 </Project>

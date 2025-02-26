@@ -12,7 +12,7 @@ public partial class AdditionalFilesGenerator
 {
     internal static class Parser
     {
-        private static TargetOptions CreateTarget(AttributeData attribute)
+        private static StaticContentOptions CreateTarget(AttributeData attribute)
         {
             const string filter = nameof(LoadAdditionalFilesAttribute.RegexFilter);
             const string omitFileExt = nameof(LoadAdditionalFilesAttribute.OmitFileExtension);
@@ -31,7 +31,7 @@ public partial class AdditionalFilesGenerator
             );
         }
 
-        public static Result<TargetData, GeneratorError> Parse(GeneratorAttributeSyntaxContext context, CancellationToken token)
+        public static Result<StaticContentTypeData, GeneratorError> Parse(GeneratorAttributeSyntaxContext context, CancellationToken token)
         {
             var syntax = (TypeDeclarationSyntax)context.TargetNode;
 
@@ -40,7 +40,7 @@ public partial class AdditionalFilesGenerator
                 return new GeneratorError(GeneratorErrors.MissingPartialKeyword, syntax.Identifier.Text);
             }
 
-            var fileTargets = ImmutableArray.CreateBuilder<TargetOptions>();
+            var fileTargets = ImmutableArray.CreateBuilder<StaticContentOptions>();
             foreach (var attribute in context.Attributes)
             {
                 var fileTarget = CreateTarget(attribute);
@@ -54,7 +54,7 @@ public partial class AdditionalFilesGenerator
 
             var symbol = (INamedTypeSymbol)context.TargetSymbol;
 
-            return new TargetData(TypeFullData.From(symbol, syntax), fileTargets.ToImmutable());
+            return new StaticContentTypeData(TypeFullData.From(symbol, syntax), fileTargets.ToImmutable());
         }
 
         public static Result<FileData, GeneratorError> GetText(AdditionalText text, CancellationToken ct)

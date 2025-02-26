@@ -19,21 +19,21 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="AKLAF0001_Title" xml:space="preserve">
-        <value>Invalid MemberKind</value>
+        <value>Invalid MemberKind value</value>
     </data>
     <data name="AKLAF0001_MessageFormat" xml:space="preserve">
-        <value>The value given for MemberKind is not supported: {0}</value>
+        <value>The value for MemberKind is not supported: {0}</value>
     </data>
     <data name="AKLAF0002_Title" xml:space="preserve">
-        <value>Loading file failed</value>
+        <value>Could not read file</value>
     </data>
     <data name="AKLAF0002_MessageFormat" xml:space="preserve">
-        <value>File could not be loaded by the generator: {0}</value>
+        <value>Additional file could not be read: {0}</value>
     </data>
     <data name="AKLAF0003_Title" xml:space="preserve">
-        <value>Target type must be partial</value>
+        <value>Type must be partial</value>
     </data>
     <data name="AKLAF0003_MessageFormat" xml:space="preserve">
-        <value>Target type must be partial for code generation to succeed: {0}</value>
+        <value>Type must be partial for codegen</value>
     </data>
 </root>

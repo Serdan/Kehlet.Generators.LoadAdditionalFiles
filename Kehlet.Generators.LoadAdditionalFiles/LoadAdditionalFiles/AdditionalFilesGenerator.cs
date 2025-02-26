@@ -24,9 +24,9 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
         context.RegisterSourceOutput(typeValuesWithTexts, static (ctx, tuple) => GenerateCode(ctx, tuple.Left, tuple.Right));
     }
 
-    internal static void GenerateCode(SourceProductionContext context, TargetData targetData, ImmutableArray<FileData> texts)
+    internal static void GenerateCode(SourceProductionContext context, StaticContentTypeData staticContentTypeData, ImmutableArray<FileData> texts)
     {
-        var typeEmitter = new Emitter(targetData, texts);
-        context.AddSourceUTF8(targetData.TypeData.Type.GetFileName(), new StandardEmitter().File(typeEmitter, targetData.TypeData));
+        var typeEmitter = new Emitter(staticContentTypeData, texts);
+        context.AddSourceUTF8(staticContentTypeData.TypeData.Type.GetFileName(), new StandardEmitter().File(typeEmitter, staticContentTypeData.TypeData));
     }
 }

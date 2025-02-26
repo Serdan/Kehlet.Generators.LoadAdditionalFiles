@@ -66,18 +66,18 @@ internal static class EmitterExtensions
             : emitter.NewLine().StringLiteral(quotes, sourceText);
     }
 
-    public static IEmitter Member(this IEmitter emitter, TargetOptions targetOptions, string path, string content)
+    public static IEmitter Member(this IEmitter emitter, StaticContentOptions staticContentOptions, string path, string content)
     {
-        var fileName = targetOptions.OmitFileExtension
+        var fileName = staticContentOptions.OmitFileExtension
             ? Path.GetFileNameWithoutExtension(path)
             : Path.GetFileName(path);
 
         var memberName = fileName.Replace('.', '_').Replace('`', '_');
-        memberName = $"{targetOptions.MemberNamePrefix}{memberName}{targetOptions.MemberNameSuffix}";
+        memberName = $"{staticContentOptions.MemberNamePrefix}{memberName}{staticContentOptions.MemberNameSuffix}";
 
         var quotes = GetRawStringQuotes(content);
 
-        return targetOptions.MemberKind switch
+        return staticContentOptions.MemberKind switch
         {
             MemberKind.Field => emitter.Field(memberName, quotes, content),
             MemberKind.Constant => emitter.Constant(memberName, quotes, content),
@@ -86,16 +86,16 @@ internal static class EmitterExtensions
         };
     }
 
-    public static IEmitter Members(this IEmitter emitter, TargetOptions targetOptions, ImmutableArray<FileData> texts)
+    public static IEmitter Members(this IEmitter emitter, StaticContentOptions staticContentOptions, ImmutableArray<FileData> texts)
     {
         foreach (var (path, content) in texts)
         {
-            if (targetOptions.RegexFilter is { Length: > 0 } pattern && Regex.IsMatch(path, pattern, RegexOptions.Compiled) is false)
+            if (staticContentOptions.RegexFilter is { Length: > 0 } pattern && Regex.IsMatch(path, pattern, RegexOptions.Compiled) is false)
             {
                 continue;
             }
 
-            emitter.Member(targetOptions, path, content)
+            emitter.Member(staticContentOptions, path, content)
                    .NewLine();
         }
 
@@ -105,11 +105,11 @@ internal static class EmitterExtensions
 
 public partial class AdditionalFilesGenerator
 {
-    internal class Emitter(TargetData targetData, ImmutableArray<FileData> texts) : TypeEmitter
+    internal class Emitter(StaticContentTypeData staticContentTypeData, ImmutableArray<FileData> texts) : TypeEmitter
     {
         public override IEmitter TypeBody(IEmitter emitter)
         {
-            foreach (var targetOptions in targetData.FileTargets)
+            foreach (var targetOptions in staticContentTypeData.Options)
             {
                 emitter.Members(targetOptions, texts);
             }

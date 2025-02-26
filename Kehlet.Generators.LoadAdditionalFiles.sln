@@ -10,6 +10,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.Analyze
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.Analyzer.Tests", "Kehlet.Generators.LoadAdditionalFiles\LoadAdditionalFiles.Analyzer\LoadAdditionalFiles.Analyzer.Tests\LoadAdditionalFiles.Analyzer.Tests.csproj", "{BF3808BA-5042-4BF2-8B0E-69043467E035}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.CodeFixes", "Kehlet.Generators.LoadAdditionalFiles\LoadAdditionalFiles.CodeFixes\LoadAdditionalFiles.CodeFixes.csproj", "{9BF27409-3351-4684-B660-F30D1227ADD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.Common", "Kehlet.Generators.LoadAdditionalFiles\LoadAdditionalFiles.Common\LoadAdditionalFiles.Common.csproj", "{639165B2-577E-4CBB-9A38-5BB44946400F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.Build", "Kehlet.Generators.LoadAdditionalFiles\LoadAdditionalFiles.Build\LoadAdditionalFiles.Build.csproj", "{AC76C97C-AFED-4FD0-8B84-565196C1A4DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +42,17 @@ Global
 		{BF3808BA-5042-4BF2-8B0E-69043467E035}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF3808BA-5042-4BF2-8B0E-69043467E035}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF3808BA-5042-4BF2-8B0E-69043467E035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BF27409-3351-4684-B660-F30D1227ADD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BF27409-3351-4684-B660-F30D1227ADD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BF27409-3351-4684-B660-F30D1227ADD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BF27409-3351-4684-B660-F30D1227ADD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{639165B2-577E-4CBB-9A38-5BB44946400F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{639165B2-577E-4CBB-9A38-5BB44946400F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{639165B2-577E-4CBB-9A38-5BB44946400F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{639165B2-577E-4CBB-9A38-5BB44946400F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC76C97C-AFED-4FD0-8B84-565196C1A4DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC76C97C-AFED-4FD0-8B84-565196C1A4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC76C97C-AFED-4FD0-8B84-565196C1A4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC76C97C-AFED-4FD0-8B84-565196C1A4DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

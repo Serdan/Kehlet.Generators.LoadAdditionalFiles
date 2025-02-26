@@ -1,8 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace Kehlet.Generators.LoadAdditionalFiles.Data;
+namespace LoadAdditionalFiles.Common;
 
-internal static class Diagnostics
+public static class Diagnostics
 {
     public static readonly DiagnosticDescriptor InvalidMemberKind =
         new("AKLAF0001", Resources.AKLAF0001_Title, Resources.AKLAF0001_MessageFormat, "Usage", DiagnosticSeverity.Error, true);

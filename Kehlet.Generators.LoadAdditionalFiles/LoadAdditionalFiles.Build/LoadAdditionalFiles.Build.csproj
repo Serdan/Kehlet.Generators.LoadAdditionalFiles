@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <NoWarn>$(NoWarn);NU5128</NoWarn>
+        <IsRoslynComponent>true</IsRoslynComponent>
+        <DevelopmentDependency>true</DevelopmentDependency>
+
+        <PackageId>Kehlet.Generators.LoadAdditionalFiles</PackageId>
+        <Title>Kehlet.Generators.LoadAdditionalFiles</Title>
+        <Description>Statically loads additional files in the project into members of marked class.</Description>
+        <Authors>Anders Kehlet</Authors>
+        <Copyright>Anders Kehlet</Copyright>
+        <PackageProjectUrl>https://github.com/Serdan/Kehlet.Generators.LoadAdditionalFiles</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Serdan/Kehlet.Generators.LoadAdditionalFiles</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <Version>1.0.30</Version>
+
+        <HomeDir>$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))</HomeDir>
+        
+        <GeneratorPath>..\LoadAdditionalFiles</GeneratorPath>
+        <AnalyzerPath>..\LoadAdditionalFiles.Analyzer\LoadAdditionalFiles.Analyzer</AnalyzerPath>
+        <CodeFixesPath>..\LoadAdditionalFiles.CodeFixes</CodeFixesPath>
+        <CommonPath>..\LoadAdditionalFiles.Common</CommonPath>
+        <StaticContentPath>..\LoadAdditionalFiles.StaticContent</StaticContentPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <PackageOutputPath>$(HomeDir)\Nuget</PackageOutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="$(MSBuildThisFileDirectory)..\..\readme.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
+
+    <Target Name="BuildDependencies" BeforeTargets="BeforeBuild;BeforeRebuild">
+        <MSBuild Projects="$(GeneratorPath)\LoadAdditionalFiles.csproj"
+                 Targets="Build"
+                 Properties="Configuration=$(Configuration)"/>
+        <MSBuild Projects="$(AnalyzerPath)\LoadAdditionalFiles.Analyzer.csproj"
+                 Targets="Build"
+                 Properties="Configuration=$(Configuration)"/>
+        <MSBuild Projects="$(CodeFixesPath)\LoadAdditionalFiles.CodeFixes.csproj"
+                 Targets="Build"
+                 Properties="Configuration=$(Configuration)"/>
+        <MSBuild Projects="$(CommonPath)\LoadAdditionalFiles.Common.csproj"
+                 Targets="Build"
+                 Properties="Configuration=$(Configuration)"/>
+        <MSBuild Projects="$(StaticContentPath)\LoadAdditionalFiles.StaticContent.csproj"
+                 Targets="Build"
+                 Properties="Configuration=$(Configuration)"/>
+    </Target>
+
+    <ItemGroup>
+        <None Include="$(GeneratorPath)\bin\$(Configuration)\netstandard2.0\LoadAdditionalFiles.dll"
+              Pack="true"
+              PackagePath="analyzers\dotnet\cs\"/>
+        <None Include="$(AnalyzerPath)\bin\$(Configuration)\netstandard2.0\LoadAdditionalFiles.Analyzer.dll"
+              Pack="true"
+              PackagePath="analyzers\dotnet\cs\"/>
+        <None Include="$(CodeFixesPath)\bin\$(Configuration)\netstandard2.0\LoadAdditionalFiles.CodeFixes.dll"
+              PackagePath="analyzers\dotnet\cs\"
+              Pack="true"/>
+
+        <None Include="$(CommonPath)\bin\$(Configuration)\netstandard2.0\LoadAdditionalFiles.Common.dll"
+              Pack="true"
+              PackagePath="analyzers\dotnet\cs\"/>
+        <None Include="$(StaticContentPath)\bin\$(Configuration)\netstandard2.0\LoadAdditionalFiles.StaticContent.dll"
+              Pack="true"
+              PackagePath="analyzers\dotnet\cs\"/>
+    </ItemGroup>
+</Project>

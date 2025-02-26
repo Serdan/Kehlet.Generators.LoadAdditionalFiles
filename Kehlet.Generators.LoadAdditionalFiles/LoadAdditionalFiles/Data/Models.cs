@@ -1,12 +1,11 @@
 ﻿using System.Collections.Immutable;
 using Kehlet.Generators.Attributes;
-using Microsoft.CodeAnalysis;
 
 namespace Kehlet.Generators.LoadAdditionalFiles.Data;
 
 internal record FileData(string Path, string Content);
 
-internal record TargetOptions(
+internal record StaticContentOptions(
     string? RegexFilter,
     bool OmitFileExtension,
     string MemberNamePrefix,
@@ -14,9 +13,9 @@ internal record TargetOptions(
     MemberKind MemberKind
 );
 
-internal record TargetData(
+internal record StaticContentTypeData(
     TypeFullData TypeData,
-    ImmutableArray<TargetOptions> FileTargets
+    ImmutableArray<StaticContentOptions> Options
 );
 
 internal enum GeneratorErrors
@@ -26,22 +25,4 @@ internal enum GeneratorErrors
     MissingPartialKeyword
 }
 
-internal record GeneratorError(GeneratorErrors Error, string Details) : IDiagnostic
-{
-    public Unit Report(SourceProductionContext context)
-    {
-        var descriptor = Error switch
-        {
-            GeneratorErrors.InvalidMemberKind => Diagnostics.InvalidMemberKind,
-            GeneratorErrors.FileNotFound => Diagnostics.FileNotFound,
-            GeneratorErrors.MissingPartialKeyword => Diagnostics.MissingPartialKeyword,
-            _ => throw new ArgumentOutOfRangeException()
-        };
-
-        var diagnostic = Diagnostic.Create(descriptor, null, Details);
-
-        context.ReportDiagnostic(diagnostic);
-
-        return unit;
-    }
-}
+internal record GeneratorError(GeneratorErrors Error, string Details);

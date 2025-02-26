@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Kehlet.Generators.LoadAdditionalFiles.Data {
+namespace LoadAdditionalFiles.Common {
     using System;
     
     
@@ -38,7 +38,7 @@ namespace Kehlet.Generators.LoadAdditionalFiles.Data {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kehlet.Generators.LoadAdditionalFiles.Data.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LoadAdditionalFiles.Common.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,7 +60,7 @@ namespace Kehlet.Generators.LoadAdditionalFiles.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The value given for MemberKind is not supported: {0}.
+        ///   Looks up a localized string similar to The value for MemberKind is not supported: {0}.
         /// </summary>
         internal static string AKLAF0001_MessageFormat {
             get {
@@ -69,7 +69,7 @@ namespace Kehlet.Generators.LoadAdditionalFiles.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid MemberKind.
+        ///   Looks up a localized string similar to Invalid MemberKind value.
         /// </summary>
         internal static string AKLAF0001_Title {
             get {
@@ -78,7 +78,7 @@ namespace Kehlet.Generators.LoadAdditionalFiles.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File could not be loaded by the generator: {0}.
+        ///   Looks up a localized string similar to Additional file could not be read: {0}.
         /// </summary>
         internal static string AKLAF0002_MessageFormat {
             get {
@@ -87,7 +87,7 @@ namespace Kehlet.Generators.LoadAdditionalFiles.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading file failed.
+        ///   Looks up a localized string similar to Could not read file.
         /// </summary>
         internal static string AKLAF0002_Title {
             get {
@@ -96,7 +96,7 @@ namespace Kehlet.Generators.LoadAdditionalFiles.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Target type must be partial for code generation to succeed: {0}.
+        ///   Looks up a localized string similar to Type must be partial for codegen.
         /// </summary>
         internal static string AKLAF0003_MessageFormat {
             get {
@@ -105,7 +105,7 @@ namespace Kehlet.Generators.LoadAdditionalFiles.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Target type must be partial.
+        ///   Looks up a localized string similar to Type must be partial.
         /// </summary>
         internal static string AKLAF0003_Title {
             get {
