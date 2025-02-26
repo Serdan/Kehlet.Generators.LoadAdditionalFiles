@@ -1,0 +1,5 @@
+﻿<Project>
+    <PropertyGroup>
+        <PackageNamespace>Kehlet.Generators.LoadAdditionalFiles</PackageNamespace>
+    </PropertyGroup>
+</Project>

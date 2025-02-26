@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <AssemblyName>$(PackageName).Sample</AssemblyName>
+        <RootNamespace>$(AssemblyName)</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="..\Roslyn\Generator\AdditionalFilesGenerator.cs">
+          <Visible>false</Visible>
+          <Link>AdditionalFilesGenerator.cs</Link>
+        </AdditionalFiles>
+        <AdditionalFiles Include="..\Roslyn\Generator\AdditionalFilesGenerator.Emitter.cs">
+          <Visible>false</Visible>
+          <Link>AdditionalFilesGenerator.Emitter.cs</Link>
+        </AdditionalFiles>
+        <AdditionalFiles Include="..\Roslyn\Generator\AdditionalFilesGenerator.Parser.cs">
+          <Visible>false</Visible>
+          <Link>AdditionalFilesGenerator.Parser.cs</Link>
+        </AdditionalFiles>
+        <AdditionalFiles Include="..\Roslyn\Generator\Data\Models.cs">
+          <Visible>false</Visible>
+          <Link>Models.cs</Link>
+        </AdditionalFiles>
+        <AdditionalFiles Include="..\Roslyn\Generator\Data\StaticContent.cs">
+          <Visible>false</Visible>
+          <Link>StaticContent.cs</Link>
+        </AdditionalFiles>
+        <AdditionalFiles Include="..\LoadAdditionalFiles\*.cs" Visible="false"/>
+        <AdditionalFiles Include="..\LoadAdditionalFiles\Data\*.cs" Visible="false"/>
+        <AdditionalFiles Include="Files\grocerylist.txt"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Kehlet.Generators.LoadAdditionalFiles" Version="1.0.30">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+</Project>

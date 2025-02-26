@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <AssemblyName>$(PackageNamespace).Generator</AssemblyName>
+        <RootNamespace>$(AssemblyName)</RootNamespace>
+
+        <StaticContentPath>..\..\StaticContent\Files</StaticContentPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.13.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"/>
+        <PackageReference Include="Kehlet.SourceGenerator.Build" Version="1.0.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"/>
+        <PackageReference Include="Kehlet.SourceGenerator.Prelude" Version="1.1.21" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"/>
+        <PackageReference Include="Kehlet.Generators.LoadAdditionalFiles" Version="1.0.6" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"/>
+        <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"/>
+        <PackageReference Include="Microsoft.Bcl.Memory" Version="9.0.2" PrivateAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="$(StaticContentPath)\*.cs" Visible="false"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Compile Update="AdditionalFilesGenerator.Parser.cs">
+            <DependentUpon>AdditionalFilesGenerator.cs</DependentUpon>
+        </Compile>
+        <Compile Update="AdditionalFilesGenerator.Emitter.cs">
+            <DependentUpon>AdditionalFilesGenerator.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\StaticContent\LoadAdditionalFiles.StaticContent.csproj"/>
+    </ItemGroup>
+</Project>
