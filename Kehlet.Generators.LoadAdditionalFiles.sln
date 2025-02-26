@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.Build", "src\Build\LoadAdditionalFiles.Build.csproj", "{800440F8-601B-4188-93CC-E87126DBE25F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.Common", "src\Common\LoadAdditionalFiles.Common.csproj", "{B858DACB-DA2A-41EF-A884-426BD3991CDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.Common", "src\Roslyn\Common\LoadAdditionalFiles.Common.csproj", "{B858DACB-DA2A-41EF-A884-426BD3991CDA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.Analyzer", "src\Roslyn\Analyzer\LoadAdditionalFiles.Analyzer.csproj", "{E78EFC68-CF49-4A31-BB63-998CADA5D425}"
 EndProject

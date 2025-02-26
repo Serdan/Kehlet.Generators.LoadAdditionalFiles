@@ -24,7 +24,7 @@
         <GeneratorPath>..\Roslyn\Generator</GeneratorPath>
         <AnalyzerPath>..\Roslyn\Analyzer</AnalyzerPath>
         <CodeFixesPath>..\Roslyn\CodeFixes</CodeFixesPath>
-        <CommonPath>..\Common</CommonPath>
+        <CommonPath>..\Roslyn\Common</CommonPath>
         <StaticContentPath>..\StaticContent</StaticContentPath>
     </PropertyGroup>
 

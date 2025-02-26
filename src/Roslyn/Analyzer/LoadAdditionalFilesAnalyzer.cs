@@ -50,9 +50,6 @@ public class LoadAdditionalFilesAnalyzer : DiagnosticAnalyzer
 
         context.ReportDiagnostic(diagnostic);
     }
-
-    // public static readonly DiagnosticDescriptor MissingPartialKeyword =
-    //     new("AKLAF0003", Resources.AKLAF0003_Title, Resources.AKLAF0003_MessageFormat, "Usage", DiagnosticSeverity.Warning, true);
 }
 
 internal static class Extensions
