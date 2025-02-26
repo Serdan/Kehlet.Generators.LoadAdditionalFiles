@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.StaticC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadAdditionalFiles.Analyzer.Tests", "src\Tests\Analyzer.Tests\LoadAdditionalFiles.Analyzer.Tests.csproj", "{43179E98-3CA4-4A52-8C5E-2C0911B1EC9E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Roslyn", "Roslyn", "{0FDE9F7F-9944-4F63-967D-66BA1E7D1916}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7C24045B-43DC-4C28-B310-687F02A5201E}"
+EndProject
 Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E78EFC68-CF49-4A31-BB63-998CADA5D425}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,5 +58,12 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|Any CPU = Release|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E78EFC68-CF49-4A31-BB63-998CADA5D425} = {0FDE9F7F-9944-4F63-967D-66BA1E7D1916}
+		{C741BC00-9B9E-43D5-921C-49C1A290E46C} = {0FDE9F7F-9944-4F63-967D-66BA1E7D1916}
+		{0599ABCF-3574-42F1-AED7-3BF5607F7509} = {0FDE9F7F-9944-4F63-967D-66BA1E7D1916}
+		{43179E98-3CA4-4A52-8C5E-2C0911B1EC9E} = {7C24045B-43DC-4C28-B310-687F02A5201E}
+		{B858DACB-DA2A-41EF-A884-426BD3991CDA} = {0FDE9F7F-9944-4F63-967D-66BA1E7D1916}
 	EndGlobalSection
 EndGlobal

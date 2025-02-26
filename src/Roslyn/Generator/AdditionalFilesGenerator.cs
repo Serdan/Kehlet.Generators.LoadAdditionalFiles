@@ -14,6 +14,7 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        context.RegisterType(MetaData.EmbeddedAttributeFullName, EmbeddedAttributeSource);
         context.RegisterType<LoadAdditionalFilesAttribute>(LoadAdditionalFilesAttributeSource);
         context.RegisterType<MemberKind>(MemberKindSource);
 

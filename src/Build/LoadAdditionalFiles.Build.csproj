@@ -5,11 +5,10 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <NoWarn>$(NoWarn);NU5128</NoWarn>
-        <IsRoslynComponent>true</IsRoslynComponent>
         <DevelopmentDependency>true</DevelopmentDependency>
 
-        <PackageId>Kehlet.Generators.LoadAdditionalFiles</PackageId>
-        <Title>Kehlet.Generators.LoadAdditionalFiles</Title>
+        <PackageId>$(PackageNamespace)</PackageId>
+        <Title>$(PackageId)</Title>
         <Description>Statically loads additional files in the project into members of marked class.</Description>
         <Authors>Anders Kehlet</Authors>
         <Copyright>Anders Kehlet</Copyright>
