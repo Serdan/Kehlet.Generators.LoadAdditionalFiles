@@ -1,8 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Text.RegularExpressions;
-using Kehlet.Generators.Attributes;
 using Kehlet.Generators.LoadAdditionalFiles.Generator.Data;
-using Kehlet.SourceGenerator.Source;
 
 namespace Kehlet.Generators.LoadAdditionalFiles.Generator;
 

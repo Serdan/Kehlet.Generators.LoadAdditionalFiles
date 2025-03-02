@@ -1,7 +1,5 @@
 ﻿using System.Collections.Immutable;
-using Kehlet.Generators.Attributes;
 using Kehlet.Generators.LoadAdditionalFiles.Generator.Data;
-using Kehlet.SourceGenerator.Source;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -27,7 +25,7 @@ public partial class AdditionalFilesGenerator
                 OmitFileExtension: args.GetValueAs<bool>(omitFileExt).DefaultValue(true),
                 MemberNamePrefix: args.GetValueAs<string>(prefix).DefaultValue(""),
                 MemberNameSuffix: args.GetValueAs<string>(suffix).DefaultValue(""),
-                MemberKind: args.GetValueAs<MemberKind>(memberKind).DefaultValue(MemberKind.Field)
+                MemberKind: args.GetEnumValue<MemberKind>(memberKind).DefaultValue(MemberKind.Field)
             );
         }
 

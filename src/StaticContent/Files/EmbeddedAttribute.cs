@@ -7,5 +7,4 @@ namespace Microsoft.CodeAnalysis;
 /// IncrementalGeneratorPostInitializationContext.AddEmbeddedAttributeDefinition() will be available from Roslyn 4.14
 /// This file should be removed at that time. 
 /// </summary>
-[Embedded]
 internal sealed class EmbeddedAttribute : Attribute;

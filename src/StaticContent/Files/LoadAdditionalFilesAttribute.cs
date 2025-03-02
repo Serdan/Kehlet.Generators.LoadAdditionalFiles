@@ -1,12 +1,11 @@
 ﻿#nullable enable
 
 using System;
-using Microsoft.CodeAnalysis;
 
-namespace Kehlet.Generators.LoadAdditionalFiles.StaticContent;
+namespace Kehlet.Generators.LoadAdditionalFiles;
 
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Embedded]
+// [Embedded]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct, AllowMultiple = true)]
 internal sealed class LoadAdditionalFilesAttribute : Attribute
 {
     public string? RegexFilter { get; set; }

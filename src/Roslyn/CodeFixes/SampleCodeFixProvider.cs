@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 using System.Composition;
-using LoadAdditionalFiles.Common;
+using Kehlet.Generators.LoadAdditionalFiles.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -9,35 +9,33 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Kehlet.Generators.LoadAdditionalFiles.CodeFixes;
 
+using static Diagnostics;
+
 [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(SampleCodeFixProvider)), Shared]
 public sealed class SampleCodeFixProvider : CodeFixProvider
 {
-    // Specify the diagnostic IDs of analyzers that are expected to be linked.
-    public override ImmutableArray<string> FixableDiagnosticIds { get; } = [Diagnostics.MissingPartialKeyword.Id];
+    public override ImmutableArray<string> FixableDiagnosticIds { get; } = [MissingPartialKeyword.Id];
 
-    // If you don't need the 'fix all' behaviour, return null.
     public override FixAllProvider? GetFixAllProvider() => null;
 
     public override async Task RegisterCodeFixesAsync(CodeFixContext context)
     {
         var diagnostic = context.Diagnostics.Single();
-
         var diagnosticSpan = diagnostic.Location.SourceSpan;
 
         var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
 
         var diagnosticNode = root?.FindNode(diagnosticSpan);
-
-        if (diagnosticNode is not ClassDeclarationSyntax declaration)
+        if (diagnosticNode is not TypeDeclarationSyntax declaration)
         {
             return;
         }
 
         context.RegisterCodeFix(
             CodeAction.Create(
-                title: Diagnostics.MissingPartialKeyword.Title.ToString(),
+                title: MissingPartialKeyword.Title.ToString(),
                 createChangedSolution: ct => AddPartialKeywordAsync(context.Document, declaration, ct),
-                equivalenceKey: nameof(Diagnostics.MissingPartialKeyword)
+                equivalenceKey: nameof(MissingPartialKeyword)
             ),
             diagnostic
         );
@@ -45,7 +43,7 @@ public sealed class SampleCodeFixProvider : CodeFixProvider
 
     private static async Task<Solution> AddPartialKeywordAsync(
         Document document,
-        ClassDeclarationSyntax classDeclarationSyntax,
+        TypeDeclarationSyntax classDeclarationSyntax,
         CancellationToken cancellationToken)
     {
         var partial = SyntaxFactory.Token(SyntaxKind.PartialKeyword).WithTrailingTrivia(SyntaxFactory.Space);

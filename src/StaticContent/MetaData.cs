@@ -2,7 +2,7 @@
 
 namespace Kehlet.Generators.LoadAdditionalFiles.StaticContent;
 
-public static class MetaData
+internal static class MetaData
 {
     public static readonly string EmbeddedAttributeFullName = typeof(EmbeddedAttribute).FullName;
     public static readonly string LoadAdditionalFilesAttributeFullName = typeof(LoadAdditionalFilesAttribute).FullName;

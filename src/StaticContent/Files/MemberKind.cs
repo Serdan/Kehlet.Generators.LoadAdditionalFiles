@@ -1,8 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿namespace Kehlet.Generators.LoadAdditionalFiles;
 
-namespace Kehlet.Generators.LoadAdditionalFiles.StaticContent;
-
-[Embedded]
+// [Embedded]
 internal enum MemberKind
 {
     Field,

@@ -28,16 +28,18 @@
           <Visible>false</Visible>
           <Link>StaticContent.cs</Link>
         </AdditionalFiles>
-        <AdditionalFiles Include="..\LoadAdditionalFiles\*.cs" Visible="false"/>
-        <AdditionalFiles Include="..\LoadAdditionalFiles\Data\*.cs" Visible="false"/>
+        <AdditionalFiles Include="..\Roslyn\Generator\Data\*.cs" Visible="false"/>
         <AdditionalFiles Include="Files\grocerylist.txt"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Kehlet.Generators.LoadAdditionalFiles" Version="1.0.30">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
+<!--      <PackageReference Include="Kehlet.Generators.LoadAdditionalFiles" Version="1.1.2">-->
+<!--        <PrivateAssets>all</PrivateAssets>-->
+<!--        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
+<!--      </PackageReference>-->
+        <ProjectReference Include="..\Roslyn\Generator\LoadAdditionalFiles.Generator.csproj" OutputItemType="Analyzer"/>
+        <ProjectReference Include="..\Roslyn\Analyzer\LoadAdditionalFiles.Analyzer.csproj" OutputItemType="Analyzer"/>
+        <ProjectReference Include="..\Roslyn\Common\LoadAdditionalFiles.Common.csproj" OutputItemType="Analyzer"/>
     </ItemGroup>
 
 </Project>

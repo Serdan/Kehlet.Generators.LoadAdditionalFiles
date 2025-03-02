@@ -16,7 +16,7 @@
         <RepositoryUrl>https://github.com/Serdan/Kehlet.Generators.LoadAdditionalFiles</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
-        <Version>1.0.30</Version>
+        <Version>1.1.2</Version>
 
         <HomeDir>$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))</HomeDir>
 
@@ -54,21 +54,21 @@
     </Target>
 
     <ItemGroup>
-        <None Include="$(GeneratorPath)\bin\$(Configuration)\netstandard2.0\LoadAdditionalFiles.dll"
+        <None Include="$(GeneratorPath)\bin\$(Configuration)\netstandard2.0\$(PackageNamespace).Generator.dll"
               PackagePath="analyzers\dotnet\cs\"
               Pack="true"/>
-        <None Include="$(AnalyzerPath)\bin\$(Configuration)\netstandard2.0\LoadAdditionalFiles.Analyzer.dll"
+        <None Include="$(AnalyzerPath)\bin\$(Configuration)\netstandard2.0\$(PackageNamespace).Analyzer.dll"
               PackagePath="analyzers\dotnet\cs\"
               Pack="true"/>
-        <None Include="$(CodeFixesPath)\bin\$(Configuration)\netstandard2.0\LoadAdditionalFiles.CodeFixes.dll"
+        <None Include="$(CodeFixesPath)\bin\$(Configuration)\netstandard2.0\$(PackageNamespace).CodeFixes.dll"
               PackagePath="analyzers\dotnet\cs\"
               Pack="true"/>
 
-        <None Include="$(CommonPath)\bin\$(Configuration)\netstandard2.0\LoadAdditionalFiles.Common.dll"
+        <None Include="$(CommonPath)\bin\$(Configuration)\netstandard2.0\$(PackageNamespace).Common.dll"
               PackagePath="analyzers\dotnet\cs\"
               Pack="true"/>
-        <None Include="$(StaticContentPath)\bin\$(Configuration)\netstandard2.0\LoadAdditionalFiles.StaticContent.dll"
-              PackagePath="analyzers\dotnet\cs\"
-              Pack="true"/>
+<!--        <None Include="$(StaticContentPath)\bin\$(Configuration)\netstandard2.0\$(PackageNamespace).StaticContent.dll"-->
+<!--              PackagePath="analyzers\dotnet\cs\"-->
+<!--              Pack="true"/>-->
     </ItemGroup>
 </Project>

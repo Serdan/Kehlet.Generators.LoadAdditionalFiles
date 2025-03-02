@@ -8,7 +8,7 @@
         <DevelopmentDependency>true</DevelopmentDependency>
 
         <AssemblyName>$(PackageNamespace).StaticContent</AssemblyName>
-        <RootNamespace>$(AssemblyName)</RootNamespace>
+        <RootNamespace>$(PackageNamespace)</RootNamespace>
     </PropertyGroup>
 
 </Project>

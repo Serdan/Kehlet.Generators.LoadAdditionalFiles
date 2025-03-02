@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LoadAdditionalFiles.Common {
+namespace Kehlet.Generators.LoadAdditionalFiles.Common {
     using System;
     
     
@@ -38,7 +38,7 @@ namespace LoadAdditionalFiles.Common {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LoadAdditionalFiles.Generator.Common.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kehlet.Generators.LoadAdditionalFiles.Common.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,7 +60,7 @@ namespace LoadAdditionalFiles.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The value for MemberKind is not supported: {0}.
+        ///   Looks up a localized string similar to The value for MemberKind is not supported.
         /// </summary>
         internal static string AKLAF0001_MessageFormat {
             get {
@@ -78,7 +78,7 @@ namespace LoadAdditionalFiles.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Additional file could not be read: {0}.
+        ///   Looks up a localized string similar to Type must be partial for codegen.
         /// </summary>
         internal static string AKLAF0002_MessageFormat {
             get {
@@ -87,29 +87,11 @@ namespace LoadAdditionalFiles.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not read file.
+        ///   Looks up a localized string similar to Type must be partial.
         /// </summary>
         internal static string AKLAF0002_Title {
             get {
                 return ResourceManager.GetString("AKLAF0002_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type must be partial for codegen.
-        /// </summary>
-        internal static string AKLAF0003_MessageFormat {
-            get {
-                return ResourceManager.GetString("AKLAF0003_MessageFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type must be partial.
-        /// </summary>
-        internal static string AKLAF0003_Title {
-            get {
-                return ResourceManager.GetString("AKLAF0003_Title", resourceCulture);
             }
         }
     }

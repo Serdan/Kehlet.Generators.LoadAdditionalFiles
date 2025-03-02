@@ -1,4 +1,5 @@
-using System.Threading.Tasks;
+using Kehlet.Generators.LoadAdditionalFiles.Common;
+using Tests.Common;
 using Xunit;
 using Verifier = Microsoft.CodeAnalysis.CSharp.Testing.CSharpCodeFixVerifier<
     Kehlet.Generators.LoadAdditionalFiles.Analyzer.LoadAdditionalFilesAnalyzer,
@@ -13,34 +14,11 @@ public class SampleCodeFixProviderTests
     [Fact]
     public async Task ClassWithMyCompanyTitle_ReplaceWithCommonKeyword()
     {
-        var original =
-            $$"""
-            using System;
-            using Kehlet.Generators.Attributes;
+        var original = SR.GetClassWithAttribute(true);
+        var fixedSource = SR.GetPartialClassWithAttribute(true);
 
-            [LoadAdditionalFiles.Generator]
-            public class MyTestClass
-            {
-            }
-
-            {{SR.GeneratorTypes}}
-            """;
-
-        var fixedSource =
-            $$"""
-            using System;
-            using Kehlet.Generators.Attributes;
-
-            [LoadAdditionalFiles.Generator]
-            public partial class MyTestClass
-            {
-            }
-
-            {{SR.GeneratorTypes}}
-            """;
-
-        var expected = Verifier.Diagnostic()
-                               .WithSpan(5, 14, 5, 25);
+        var expected = Verifier.Diagnostic(Diagnostics.MissingPartialKeyword)
+                               .WithSpan(7, 18, 7, 29);
 
         await Verifier.VerifyCodeFixAsync(original, expected, fixedSource);
     }

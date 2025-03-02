@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <ImplicitUsings>true</ImplicitUsings>
 
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <IsRoslynComponent>true</IsRoslynComponent>
@@ -14,8 +15,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Common\LoadAdditionalFiles.Common.csproj" />
-      <ProjectReference Include="..\..\StaticContent\LoadAdditionalFiles.StaticContent.csproj" />
+        <PackageReference Include="Kehlet.SourceGenerator.Prelude" Version="1.1.26" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"/>
+        <PackageReference Include="Meziantou.Polyfill" Version="1.0.42" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"/>
+
+        <ProjectReference Include="..\Common\LoadAdditionalFiles.Common.csproj"/>
+
+        <Compile Include="..\..\StaticContent\Files\*.cs" Visible="false"/>
+        <Compile Include="..\..\StaticContent\MetaData.cs" Visible="false"/>
     </ItemGroup>
 
 </Project>

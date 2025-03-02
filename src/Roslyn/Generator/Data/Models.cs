@@ -1,5 +1,5 @@
 ﻿using System.Collections.Immutable;
-using Kehlet.Generators.Attributes;
+using Kehlet.Generators.LoadAdditionalFiles.StaticContent;
 
 namespace Kehlet.Generators.LoadAdditionalFiles.Generator.Data;
 

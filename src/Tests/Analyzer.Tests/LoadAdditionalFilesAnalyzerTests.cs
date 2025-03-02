@@ -1,4 +1,5 @@
-using System.Threading.Tasks;
+using Kehlet.Generators.LoadAdditionalFiles.Common;
+using Tests.Common;
 using Xunit;
 using Verifier = Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerVerifier<
     Kehlet.Generators.LoadAdditionalFiles.Analyzer.LoadAdditionalFilesAnalyzer,
@@ -12,22 +13,10 @@ public class LoadAdditionalFilesAnalyzerTests
     [Fact]
     public async Task ClassWithMyCompanyTitle_AlertDiagnostic()
     {
-        var text =
-            $$"""
-            using System;
-            using Kehlet.Generators.Attributes;
+        var text = SR.GetClassWithAttribute(true);
 
-            [LoadAdditionalFiles.Generator]
-            public class MyTestClass
-            {
-            }
-
-            {{SR.GeneratorTypes}}
-            """;
-
-
-        var expected = Verifier.Diagnostic()
-                               .WithSpan(5, 14, 5, 25);
+        var expected = Verifier.Diagnostic(Diagnostics.MissingPartialKeyword)
+                               .WithSpan(7, 18, 7, 29);
 
         await Verifier.VerifyAnalyzerAsync(text, expected);
     }

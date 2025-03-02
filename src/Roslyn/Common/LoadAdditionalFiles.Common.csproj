@@ -6,6 +6,9 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <DevelopmentDependency>true</DevelopmentDependency>
+
+        <AssemblyName>$(PackageNamespace).Common</AssemblyName>
+        <RootNamespace>$(AssemblyName)</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
