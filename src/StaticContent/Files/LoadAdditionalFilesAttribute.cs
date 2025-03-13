@@ -2,11 +2,12 @@
 
 using System;
 using Microsoft.CodeAnalysis;
+using static System.AttributeTargets;
 
 namespace Kehlet.Generators.LoadAdditionalFiles;
 
 [Embedded]
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct, AllowMultiple = true)]
+[AttributeUsage(Class | Struct | Interface, AllowMultiple = true)]
 internal sealed class LoadAdditionalFilesAttribute : Attribute
 {
     public string? RegexFilter { get; set; }
