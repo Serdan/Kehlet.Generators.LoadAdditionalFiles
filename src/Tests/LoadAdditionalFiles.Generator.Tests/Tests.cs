@@ -18,7 +18,7 @@ public class Tests
 
         var result = driver.GetRunResult().Results.Single();
         Assert.Empty(resultComp.GetDiagnostics().Where(x => x.Severity is not (DiagnosticSeverity.Info or DiagnosticSeverity.Hidden)));
-        Assert.Equal(3, result.GeneratedSources.Length);
+        Assert.Equal(4, result.GeneratedSources.Length);
         return Verify(result.GeneratedSources.Last().SourceText.ToString());
     }
 
@@ -31,7 +31,7 @@ public class Tests
 
         var result = driver.GetRunResult().Results.Single();
         Assert.Empty(resultComp.GetDiagnostics().Where(x => x.Severity is not (DiagnosticSeverity.Info or DiagnosticSeverity.Hidden)));
-        Assert.Equal(3, result.GeneratedSources.Length);
+        Assert.Equal(4, result.GeneratedSources.Length);
         return Verify(result.GeneratedSources.Last().SourceText.ToString());
     }
 }

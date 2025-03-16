@@ -14,17 +14,17 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var assembly = Assembly.GetExecutingAssembly();
-
-        var attributeStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.LoadAdditionalFilesAttribute.cs")!;
-        var memberKindEnumStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.MemberKind.cs")!;
-        var embeddedStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.EmbeddedAttribute.cs")!;
-
-        context.RegisterPostInitializationOutput(ctx =>
+        context.RegisterPostInitializationOutput(static ctx =>
         {
-            ctx.AddSource(attributeName, SourceText.From(attributeStream, Encoding.UTF8));
-            ctx.AddSource(typeof(MemberKind).FullName!, SourceText.From(memberKindEnumStream, Encoding.UTF8));
-            ctx.AddSource(typeof(EmbeddedAttribute).FullName!, SourceText.From(embeddedStream, Encoding.UTF8));
+            var assembly = Assembly.GetExecutingAssembly();
+
+            var attributeStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.LoadAdditionalFilesAttribute.cs")!;
+            var memberKindEnumStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.MemberKind.cs")!;
+            var embeddedStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.EmbeddedAttribute.cs")!;
+
+            ctx.AddSource<LoadAdditionalFilesAttribute>(attributeStream);
+            ctx.AddSource<MemberKind>(memberKindEnumStream);
+            ctx.AddSource<EmbeddedAttribute>(embeddedStream);
         });
 
         var textValues = context.AdditionalTextsProvider.Select(Parser.GetText).Choose();
