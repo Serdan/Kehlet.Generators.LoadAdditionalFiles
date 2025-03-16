@@ -14,21 +14,21 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var assembly = Assembly.GetExecutingAssembly();
-
-        var attributeStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.LoadAdditionalFilesAttribute.cs")!;
-        var memberKindEnumStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.MemberKind.cs")!;
-        var embeddedStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.EmbeddedAttribute.cs")!;
-
-        context.RegisterPostInitializationOutput(ctx =>
+        context.RegisterPostInitializationOutput(static ctx =>
         {
-            ctx.AddSource(attributeName, SourceText.From(attributeStream, Encoding.UTF8));
-            ctx.AddSource(typeof(MemberKind).FullName!, SourceText.From(memberKindEnumStream, Encoding.UTF8));
-            ctx.AddSource(typeof(EmbeddedAttribute).FullName!, SourceText.From(embeddedStream, Encoding.UTF8));
+            var assembly = Assembly.GetExecutingAssembly();
+
+            var attributeStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.LoadAdditionalFilesAttribute.cs")!;
+            var memberKindEnumStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.MemberKind.cs")!;
+            var embeddedStream = assembly.GetManifestResourceStream("Kehlet.Generators.LoadAdditionalFiles.Generator.EmbeddedAttribute.cs")!;
+
+            ctx.AddSource<LoadAdditionalFilesAttribute>(attributeStream);
+            ctx.AddSource<MemberKind>(memberKindEnumStream);
+            ctx.AddSource<EmbeddedAttribute>(embeddedStream);
         });
 
         var textValues = context.AdditionalTextsProvider.Select(Parser.GetText).Choose();
-        var typeValues = context.GetTargetProvider(attributeName, SyntaxTarget.Type, Parser.Parse).Choose();
+        var typeValues = context.CreateTargetProvider(attributeName, SyntaxTarget.Type, Parser.Parse).Choose();
 
         var typeValuesWithTexts = typeValues.Combine(textValues.Collect().WithComparer(Equality<FileData>.ArrayComparer));
 
@@ -40,13 +40,4 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
         var source = new Emitter(data, texts).Visit(data.ModuleDescription).UnsafeValue.ToString();
         context.AddSourceUTF8(data.FileName, source);
     }
-}
-
-internal static class Extensions
-{
-    public static void RegisterSourceOutput<TLeft, TRight>(
-        this IncrementalGeneratorInitializationContext context,
-        IncrementalValuesProvider<(TLeft, TRight)> source,
-        Action<SourceProductionContext, TLeft, TRight> action) =>
-        context.RegisterSourceOutput(source, (productionContext, tuple) => action(productionContext, tuple.Item1, tuple.Item2));
 }
