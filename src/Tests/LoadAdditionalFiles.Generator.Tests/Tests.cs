@@ -12,7 +12,7 @@ public class Tests
     [Fact]
     public Task GenerateEmptyPartialClass()
     {
-        var generator = new AdditionalFilesGenerator();
+        var generator = new LoadAdditionalFilesGenerator();
         var comp = CompilationFactory.PartialClassWithAttribute();
         var driver = GeneratorDriverFactory.WithNoFiles(generator).RunGeneratorsAndUpdateCompilation(comp, out var resultComp, out _);
 
@@ -25,7 +25,7 @@ public class Tests
     [Fact]
     public Task GenerateOneMemberDefaultSettings()
     {
-        var generator = new AdditionalFilesGenerator();
+        var generator = new LoadAdditionalFilesGenerator();
         var comp = CompilationFactory.PartialClassWithAttribute();
         var driver = GeneratorDriverFactory.WithOneFile(generator).RunGeneratorsAndUpdateCompilation(comp, out var resultComp, out _);
 

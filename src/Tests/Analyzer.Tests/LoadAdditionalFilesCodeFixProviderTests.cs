@@ -3,13 +3,13 @@ using Tests.Common;
 using Xunit;
 using Verifier = Microsoft.CodeAnalysis.CSharp.Testing.CSharpCodeFixVerifier<
     Kehlet.Generators.LoadAdditionalFiles.Analyzer.LoadAdditionalFilesAnalyzer,
-    Kehlet.Generators.LoadAdditionalFiles.CodeFixes.SampleCodeFixProvider,
+    Kehlet.Generators.LoadAdditionalFiles.CodeFixes.LoadAdditionalFilesCodeFixProvider,
     Microsoft.CodeAnalysis.Testing.DefaultVerifier
 >;
 
 namespace LoadAdditionalFiles.Analyzer.Tests;
 
-public class SampleCodeFixProviderTests
+public class LoadAdditionalFilesCodeFixProviderTests
 {
     [Fact]
     public async Task ClassWithMyCompanyTitle_ReplaceWithCommonKeyword()

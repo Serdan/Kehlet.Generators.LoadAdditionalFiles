@@ -1,14 +1,12 @@
 using System.Collections.Immutable;
 using System.Reflection;
-using System.Text;
 using Kehlet.Generators.LoadAdditionalFiles.Generator.Data;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
 
 namespace Kehlet.Generators.LoadAdditionalFiles.Generator;
 
 [Generator]
-public partial class AdditionalFilesGenerator : IIncrementalGenerator
+public partial class LoadAdditionalFilesGenerator : IIncrementalGenerator
 {
     private static readonly string attributeName = typeof(LoadAdditionalFilesAttribute).FullName!;
 
@@ -37,7 +35,8 @@ public partial class AdditionalFilesGenerator : IIncrementalGenerator
 
     internal static void GenerateCode(SourceProductionContext context, StaticContentTypeData data, ImmutableArray<FileData> texts)
     {
-        var source = new Emitter(data, texts).Visit(data.ModuleDescription).UnsafeValue.ToString();
-        context.AddSourceUTF8(data.FileName, source);
+        var emitter = new Emitter(data, texts);
+        emitter.Visit(data.ModuleDescription);
+        context.AddSourceUTF8(data.FileName, emitter.ToString());
     }
 }

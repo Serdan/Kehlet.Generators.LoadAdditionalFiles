@@ -21,7 +21,7 @@ public class GeneratorBenchmarks
     [GlobalSetup]
     public void Setup()
     {
-        var generator  = new AdditionalFilesGenerator();
+        var generator  = new LoadAdditionalFilesGenerator();
         
         simpleComp = CompilationFactory.PartialClassWithAttribute();
         driver = GeneratorDriverFactory.WithOneFile(generator);
