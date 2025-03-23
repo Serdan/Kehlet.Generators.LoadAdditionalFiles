@@ -9,6 +9,6 @@ public static class GeneratorDriverFactory
         CSharpGeneratorDriver.Create(generator);
 
     public static CSharpGeneratorDriver WithOneFile(IIncrementalGenerator generator) =>
-        (CSharpGeneratorDriver)CSharpGeneratorDriver.Create(generator)
-                                                    .AddAdditionalTexts([TestAdditionalText.From("SomeDir\\MyFile.txt", "TODO: Conquer the world")]);
+        (CSharpGeneratorDriver) CSharpGeneratorDriver.Create(generator)
+                                                     .AddAdditionalTexts([TestAdditionalText.From("SomeDir\\MyFile.txt", "TODO: Conquer the world")]);
 }

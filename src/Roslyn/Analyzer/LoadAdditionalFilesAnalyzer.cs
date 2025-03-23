@@ -36,7 +36,7 @@ public class LoadAdditionalFilesAnalyzer : DiagnosticAnalyzer
 
     private static void FindStaticContentContainer(SyntaxNodeAnalysisContext context)
     {
-        var typeDeclarationNode = (TypeDeclarationSyntax)context.Node;
+        var typeDeclarationNode = (TypeDeclarationSyntax) context.Node;
 
         var attributes = typeDeclarationNode.GetAttributesWithName(context.SemanticModel, AttributeName);
         if (attributes.IsEmpty)

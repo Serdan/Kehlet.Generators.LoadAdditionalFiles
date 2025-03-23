@@ -1,13 +1,14 @@
+using Kehlet.Generators.LoadAdditionalFiles.Analyzer;
+using Kehlet.Generators.LoadAdditionalFiles.CodeFixes;
 using Kehlet.Generators.LoadAdditionalFiles.Common;
+using Microsoft.CodeAnalysis.CSharp.Testing;
+using Microsoft.CodeAnalysis.Testing;
 using Tests.Common;
 using Xunit;
-using Verifier = Microsoft.CodeAnalysis.CSharp.Testing.CSharpCodeFixVerifier<
-    Kehlet.Generators.LoadAdditionalFiles.Analyzer.LoadAdditionalFilesAnalyzer,
-    Kehlet.Generators.LoadAdditionalFiles.CodeFixes.LoadAdditionalFilesCodeFixProvider,
-    Microsoft.CodeAnalysis.Testing.DefaultVerifier
->;
 
 namespace LoadAdditionalFiles.Analyzer.Tests;
+
+using Verifier = CSharpCodeFixVerifier<LoadAdditionalFilesAnalyzer, LoadAdditionalFilesCodeFixProvider, DefaultVerifier>;
 
 public class LoadAdditionalFilesCodeFixProviderTests
 {

@@ -31,7 +31,7 @@ public partial class LoadAdditionalFilesGenerator
 
         public static Option<StaticContentTypeData> Parse(GeneratorAttributeSyntaxContext context, CancellationToken token)
         {
-            var targetNode = (TypeDeclarationSyntax)context.TargetNode;
+            var targetNode = (TypeDeclarationSyntax) context.TargetNode;
 
             if (targetNode.Modifiers.Any(SyntaxKind.PartialKeyword) is false)
             {
