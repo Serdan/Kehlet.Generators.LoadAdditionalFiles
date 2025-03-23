@@ -11,7 +11,6 @@ internal record StaticContentOptions(
 );
 
 internal record StaticContentTypeData(
-    string TargetIdentifier,
     string FileName,
     ModuleDescription ModuleDescription,
     CacheArray<StaticContentOptions> Options
