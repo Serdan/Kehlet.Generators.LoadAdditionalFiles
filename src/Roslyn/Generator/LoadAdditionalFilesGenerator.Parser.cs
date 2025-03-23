@@ -61,7 +61,6 @@ public partial class LoadAdditionalFilesGenerator
             fileName += ".g.cs";
 
             return new StaticContentTypeData(
-                targetNode.Identifier.ValueText,
                 fileName,
                 moduleData.UnsafeValue,
                 fileTargets.ToCacheArray()

@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="LoadAdditionalFilesGenerator.Parser.cs" DependentUpon="AdditionalFilesGenerator.cs"/>
-    <Compile Update="LoadAdditionalFilesGenerator.Emitter.cs" DependentUpon="AdditionalFilesGenerator.cs"/>
+    <Compile Update="LoadAdditionalFilesGenerator.Parser.cs" DependentUpon="LoadAdditionalFilesGenerator.cs"/>
+    <Compile Update="LoadAdditionalFilesGenerator.Emitter.cs" DependentUpon="LoadAdditionalFilesGenerator.cs"/>
   </ItemGroup>
 
 </Project>
