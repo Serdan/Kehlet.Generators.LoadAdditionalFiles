@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Kehlet.Generators.LoadAdditionalFiles.Generator;
 
-public partial class AdditionalFilesGenerator
+public partial class LoadAdditionalFilesGenerator
 {
     internal static class Parser
     {
@@ -81,11 +81,11 @@ public partial class AdditionalFilesGenerator
         }
     }
 
-    internal class NamespaceVisitor : SyntaxDescriptionWalker<Unit>
+    internal class NamespaceVisitor : SyntaxDescriptionWalker
     {
         public Option<string> Namespace = None;
 
-        public override Option<Unit> VisitNamespace(NamespaceDescription description)
+        public override Unit VisitNamespace(NamespaceDescription description)
         {
             if (description.IsFileScoped)
             {
