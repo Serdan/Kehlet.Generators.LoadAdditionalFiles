@@ -11,8 +11,8 @@ namespace Kehlet.Generators.LoadAdditionalFiles.CodeFixes;
 
 using static Diagnostics;
 
-[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(SampleCodeFixProvider)), Shared]
-public sealed class SampleCodeFixProvider : CodeFixProvider
+[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(LoadAdditionalFilesCodeFixProvider)), Shared]
+public sealed class LoadAdditionalFilesCodeFixProvider : CodeFixProvider
 {
     public override ImmutableArray<string> FixableDiagnosticIds { get; } = [MissingPartialKeyword.Id];
 
