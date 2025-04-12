@@ -35,8 +35,8 @@ public partial class LoadAdditionalFilesGenerator : IIncrementalGenerator
 
     internal static void GenerateCode(SourceProductionContext context, StaticContentTypeData data, ImmutableArray<FileData> texts)
     {
-        var emitter = new Emitter(data, texts);
+        var emitter = new FilesEmitter(data, texts);
         emitter.Visit(data.ModuleDescription);
-        context.AddSourceUTF8(data.FileName, emitter.ToString());
+        context.AddSource(data.FileName, emitter.ToString());
     }
 }
