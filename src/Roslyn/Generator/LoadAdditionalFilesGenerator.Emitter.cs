@@ -6,30 +6,18 @@ namespace Kehlet.Generators.LoadAdditionalFiles.Generator;
 
 public partial class LoadAdditionalFilesGenerator
 {
-    internal class Emitter(StaticContentTypeData typeData, ImmutableArray<FileData> texts) : SyntaxDescriptionEmitter
+    internal class FilesEmitter(StaticContentTypeData typeData, ImmutableArray<FileData> texts) : SyntaxDescriptionEmitter
     {
-        public Unit Field(string memberName) =>
-            Emitter.Tabs()
-                   .Append("public static readonly string ")
-                   .Append(memberName)
-                   .Append(" =")
-                   .Ignore();
+        public Emitter Field(string memberName) =>
+            Emitter * "public static readonly string " * memberName * " =";
+        
+        public Emitter Constant(string memberName) =>
+            Emitter * "public const string " * memberName * " =";
 
-        public Unit Constant(string memberName) =>
-            Emitter.Tabs()
-                   .Append("public const string ")
-                   .Append(memberName)
-                   .Append(" =")
-                   .Ignore();
+        public Emitter Property(string memberName) =>
+            Emitter * "public static string " * memberName * " =>";
 
-        public Unit Property(string memberName) =>
-            Emitter.Tabs()
-                   .Append("public static string ")
-                   .Append(memberName)
-                   .Append(" =>")
-                   .Ignore();
-
-        public IEmitter Member(StaticContentOptions staticContentOptions, string path, string content)
+        public Emitter Member(StaticContentOptions staticContentOptions, string path, string content)
         {
             var fileName = staticContentOptions.OmitFileExtension switch
             {
